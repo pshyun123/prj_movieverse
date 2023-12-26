@@ -38,13 +38,13 @@ const MempostSort = ({ selType, setSelType }) => {
       <div className="container">
         <button
           className={`written ${selType === "written" ? "selected" : ""}`}
-          onClick={setSelType}
+          onClick={() => setSelType(0)}
         >
           작성글
         </button>
         <button
           className={`comment ${selType === "comment" ? "selected" : ""}`}
-          onClick={setSelType}
+          onClick={() => setSelType(1)}
         >
           작성댓글
         </button>

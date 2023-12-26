@@ -240,14 +240,14 @@ const MemberInfoChg = () => {
         fileRef.getDownloadURL().then((url) => {
           console.log("저장경로 확인 : " + url);
           setUrl(url);
-          Common.handleTokenAxios(saveMemberInfo);
+          Common.handleTokenAxios(() => saveMemberInfo(url));
         });
       });
     } else {
       Common.handleTokenAxios(saveMemberInfo);
     }
   };
-  const saveMemberInfo = async () => {
+  const saveMemberInfo = async (url) => {
     const originImage = imgSrc === basicProfile ? "" : imgSrc;
     const image = url !== "" ? url : originImage;
     const res = await MemberApi.changeMemberInfo(

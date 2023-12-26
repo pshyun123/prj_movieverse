@@ -4,8 +4,17 @@ import { useState, useEffect } from "react";
 
 const MemberPost = () => {
   const [selType, setSelType] = useState("written");
-  const onChange = () => {
-    selType === "written" ? setSelType("comment") : setSelType("written");
+  const onChange = (num) => {
+    switch (num) {
+      case 0:
+        setSelType("written");
+        break;
+      case 1:
+        setSelType("comment");
+        break;
+      default:
+        return;
+    }
   };
 
   useEffect(() => {

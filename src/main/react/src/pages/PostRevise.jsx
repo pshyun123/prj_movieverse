@@ -115,7 +115,7 @@ const PostRevise = () => {
     );
     if (res.data) {
       console.log("저장 성공!");
-      navigate(`/board/${boardData.id}`);
+      navigate(`/board/post/${boardData.id}`);
     }
   };
 
