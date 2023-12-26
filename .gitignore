@@ -46,6 +46,7 @@ out/
 *.hprof
 
 
+
 # react .gitignore
 
 # dependencies
@@ -74,3 +75,5 @@ src/main/react/yarn-error.log*
 
 # Resources
 src/main/resources/static/static
+src/main/resources/static/*
+src/main/resources/static/
