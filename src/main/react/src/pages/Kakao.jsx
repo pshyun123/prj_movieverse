@@ -6,6 +6,7 @@ import MemberApi from "../api/MemberApi";
 import Common from "../util/Common";
 import { UserContext } from "../context/UserStore";
 import Loading from "../component/Kakao/Loading";
+import Modal from "../util/Modal";
 
 const Kakao = () => {
   const navigate = useNavigate();
@@ -35,14 +36,16 @@ const Kakao = () => {
 
   const kakaoUser = async (token) => {
     const res = await KakaoApi.getInfo(token);
-    console.log("kakaoUser", res.data);
-    if (res.data) {
+    console.log("kakaoUser", typeof res.data);
+    if (res.data !== "") {
       setIsMember(!res.data.isMember);
       if (!res.data.isMember) {
         setEmail(res.data.userInfo.kakao_account.email);
         setProfile(res.data.userInfo.kakao_account.profile.profile_image_url);
         setKakaoId(res.data.userInfo.id);
       }
+    } else if (res.data === "") {
+      handleModal("오류", "이미 일반회원으로 사용중인 이메일입니다", false);
     }
     if (res.data.isMember) {
       login(res.data.userInfo.kakao_account.email, res.data.userInfo.id);
@@ -77,10 +80,35 @@ const Kakao = () => {
     console.log("id : " + kakaoId);
   }, [isMember, email, profile, kakaoId]);
 
+  //Modal
+  const [openModal, setModalOpen] = useState(false);
+  const [modalMsg, setModalMsg] = useState("");
+  const [modalHeader, setModalHeader] = useState("");
+  const [modalType, setModalType] = useState(null);
+
+  // 모달 닫기
+  const closeModal = (num) => {
+    setModalOpen(false);
+    navigate("/login");
+  };
+  const handleModal = (header, msg, type) => {
+    setModalOpen(true);
+    setModalHeader(header);
+    setModalMsg(msg);
+    setModalType(type);
+  };
+
   return (
     <>
       {isMember && <Join email={email} kakaoId={kakaoId} profile={profile} />}
       {!isMember && <Loading />}
+      <Modal
+        open={openModal}
+        close={closeModal}
+        header={modalHeader}
+        children={modalMsg}
+        type={modalType}
+      />
     </>
   );
 };

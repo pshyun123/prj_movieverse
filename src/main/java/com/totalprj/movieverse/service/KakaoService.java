@@ -36,26 +36,38 @@ public class KakaoService {
 
         String url = "https://kapi.kakao.com/v2/user/me";
 
-        ResponseEntity<KakaoDto> responseEntity = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                KakaoDto.class
-        );
-        KakaoDto kakaoDto = responseEntity.getBody();
-        boolean isExist = false;
-        if (kakaoDto != null) {
-            isExist = kakaoRepository.existsById(kakaoDto.getId());
-            log.info("kakaoId exists? : {}",isExist);
-            if(!isExist)saveKakaoEntity(kakaoDto);
-            else {
-                isExist = memberRepository.existsByEmail(kakaoDto.getKakaoAccount().getEmail());
-            }
-        }
-        kakaoInfo.put("isMember", isExist);
-        kakaoInfo.put("userInfo", kakaoDto);
+        try {
+            ResponseEntity<KakaoDto> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(headers),
+                    KakaoDto.class
+            );
+            KakaoDto kakaoDto = responseEntity.getBody();
+            boolean isExist = false;
+            if (kakaoDto != null) {
 
-        return kakaoInfo;
+                String kakaoEmail = kakaoDto.getKakaoAccount().getEmail();
+                if(memberRepository.existsByEmail(kakaoEmail)) {
+                    log.error("카카오 : 이미 가입된 이메일 입니다.");
+                    throw new RuntimeException("카카오 : 이미 가입된 이메일 입니다");
+                }
+
+                isExist = kakaoRepository.existsById(kakaoDto.getId());
+                log.info("kakaoId exists? : {}",isExist);
+                if(!isExist)saveKakaoEntity(kakaoDto);
+                else {
+                    isExist = memberRepository.existsByEmail(kakaoDto.getKakaoAccount().getEmail());
+                }
+            }
+            kakaoInfo.put("isMember", isExist);
+            kakaoInfo.put("userInfo", kakaoDto);
+
+            return kakaoInfo;
+        }catch(Exception e) {
+            log.error("카카오 가입 시도 중 오류 발생(카카오 서비스)");
+            return null;
+        }
     }
 
     private void saveKakaoEntity(KakaoDto kakaoDto) {

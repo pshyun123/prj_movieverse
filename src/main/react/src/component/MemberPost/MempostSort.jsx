@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
 
 /* 내 게시글\댓글 버튼*/
 const MempostSortComp = styled.section`
