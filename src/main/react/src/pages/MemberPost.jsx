@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 
 const MemberPost = () => {
   const [selType, setSelType] = useState("written");
+
+  // 백 여러번 호출 방지
+  const [isLoading, setIsLoading] = useState(false);
+
   const onChange = (num) => {
     switch (num) {
       case 0:
@@ -19,12 +23,18 @@ const MemberPost = () => {
 
   useEffect(() => {
     console.log("선택값 : " + selType);
+    setIsLoading(true);
   }, [selType]);
 
   return (
     <>
       <MempostSort selType={selType} setSelType={onChange} />
-      <BoardCardList category="member" type={selType} />
+      <BoardCardList
+        category="member"
+        type={selType}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
     </>
   );
 };
