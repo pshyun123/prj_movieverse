@@ -68,6 +68,7 @@ const BoardCardList = ({
     if (res.data !== null) {
       setBoardData(res.data);
     }
+    setIsLoading(false);
   };
 
   // 새로운 조건의 리스트를 불러와야 하는 경우
@@ -76,7 +77,6 @@ const BoardCardList = ({
       category === "member"
         ? Common.handleTokenAxios(fetchMemTotalPage)
         : Common.handleTokenAxios(fetchTotalPage);
-      console.log("타입 : " + gatherType);
     }
   }, [isLoading]);
 
