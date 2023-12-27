@@ -7,6 +7,7 @@ import Common from "../util/Common";
 import CommentList from "../component/Board/Comment/CommentList";
 import MemberApi from "../api/MemberApi";
 import Modal from "../util/Modal";
+import profileimg from "../images/faceIcon/faceIcon1.png";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -88,7 +89,14 @@ const Post = () => {
           <div className="titleBox">
             <div className="memIconArea">
               <div className="imgBox">
-                <img src={boardData.memberImage} alt="memberIcon" />
+                <img
+                  src={
+                    boardData && boardData.memberImage
+                      ? boardData.memberImage
+                      : profileimg
+                  }
+                  alt="memberIcon"
+                />
               </div>
               <p>{boardData.memberAlias}</p>
             </div>

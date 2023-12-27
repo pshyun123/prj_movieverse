@@ -68,14 +68,13 @@ const NewPost = () => {
   // 게시판 리스트로 이동
   const navigate = useNavigate();
   const toGatherList = () => {
-    navigate("/board/gather");
+    navigate(-1);
   };
 
   // 이미지 업로드
   const [imgSrc, setImgSrc] = useState(basicImg);
   const [file, setFile] = useState("");
   const [url, setUrl] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
 
   // 입력받은 이미지 파일 주소
   const handleFileInputChange = (e) => {
@@ -133,6 +132,22 @@ const NewPost = () => {
       }
     }
   };
+
+  // 등록하기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const requiredData =
+      inputTitle.length > 0 &&
+      inputContents.length > 0 &&
+      selCategory.length > 0 &&
+      ((selCategory !== "무비추천" && selGather.length > 0) ||
+        selGather.length === 0) &&
+      (imgSrc !== basicImg || imgSrc.startsWith("blob:"));
+
+    setIsActive(requiredData);
+    console.log("이미지 데이터 : ", imgSrc);
+  }, [inputTitle, inputContents, imgSrc, selCategory, selGather]);
 
   return (
     <>
@@ -231,7 +246,7 @@ const NewPost = () => {
               <textarea
                 type="text"
                 value={inputTitle}
-                placeholder="모임 제목을 입력해주세요"
+                placeholder="제목을 입력해주세요"
                 onChange={onInputTitleChange}
               ></textarea>
             </div>
@@ -255,14 +270,14 @@ const NewPost = () => {
               <textarea
                 type="text"
                 value={inputContents}
-                placeholder="모임내용을 입력해주세요"
+                placeholder="내용을 입력해주세요"
                 onChange={onInputContentsChange}
               ></textarea>
             </div>
             <div className="buttonBox">
               <Button
                 children="등록하기"
-                active={true}
+                active={isActive}
                 back="var(--BLUE)"
                 clickEvt={onSubmit}
               />
