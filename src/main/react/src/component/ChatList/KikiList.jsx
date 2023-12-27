@@ -188,7 +188,7 @@ const KikiList = () => {
                   onClick={() => enterKiki(room.roomId)}
                 />
               ))}
-            {KikiList.length === 0 && (
+            {kikiList.length === 0 && (
               <div className="txtBox">
                 <p>진행중인 키키가 없습니다</p>
                 <p>키키를 오픈하고 새로운 영화친구를 기다려보세요!</p>

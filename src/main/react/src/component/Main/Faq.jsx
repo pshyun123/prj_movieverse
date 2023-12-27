@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import FaqApi from "../../api/FaqApi";
-import Common from "../../util/Common";
 
 const FAQComp = styled.section`
   .container {
@@ -61,6 +59,7 @@ const FAQComp = styled.section`
             color: var(--GREY);
             padding: 10px;
             font-weight: 400;
+            white-space: pre-wrap;
           }
         }
 
