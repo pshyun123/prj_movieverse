@@ -79,8 +79,19 @@ public class MemberService {
         try {
             Member member = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다."));
             member.setWithdraw(true);
+
+            if(kakaoRepository.existsByEmail(member.getEmail())){
+                Kakao kakao = kakaoRepository.findByEmail(member.getEmail())
+                        .orElseThrow(() -> new RuntimeException("카카오 회원 정보가 없습니다."));
+                kakaoRepository.delete(kakao);
+            }
+
             member.setEmail(member.getEmail().concat("-"));
+            member.setPhone("");
+            member.setAddr("");
+            member.setName("");
             memberRepository.save(member);
+
             RefreshToken refreshToken = refreshTokenRepository.findByMember(member)
                     .orElseThrow(() -> new RuntimeException("Token정보가 없습니다."));
             refreshTokenRepository.delete(refreshToken);
@@ -152,6 +163,13 @@ public class MemberService {
             Member member = memberRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다."));
             log.info("회원 정보가 삭제되었습니다. 회원 ID: {}", id);
+
+            if(kakaoRepository.existsByEmail(member.getEmail())){
+                Kakao kakao = kakaoRepository.findByEmail(member.getEmail())
+                        .orElseThrow(() -> new RuntimeException("카카오 회원 정보가 없습니다."));
+                kakaoRepository.delete(kakao);
+            }
+
             memberRepository.delete(member);
             return true;
         } catch (Exception e) {
