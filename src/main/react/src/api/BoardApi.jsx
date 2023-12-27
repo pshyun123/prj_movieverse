@@ -20,7 +20,7 @@ const BoardApi = {
     );
   },
   boardList: async () => {
-    console.log("게시판 불러와졌니 ? ");
+    console.log("게시판목록 불러오는 중");
     return await axios.get(
       Common.MV_DOMAIN + `/board/list`,
       Common.tokenHeader()
@@ -28,7 +28,7 @@ const BoardApi = {
   },
   // 상세 게시글 정보
   boardDetail: async (postId) => {
-    console.log("상세 게시판은 불러와졌을까? ");
+    console.log("상세 게시글 진입");
     return await axios.get(
       Common.MV_DOMAIN + `/board/post/${postId}`,
       Common.tokenHeader()
@@ -77,9 +77,7 @@ const BoardApi = {
 
   // 총 페이지 수
   getTotalPage: async (keyword, categoryName, gatherType) => {
-    // console.log("총페이지 키워드 : " + keyword);
-    // console.log("총페이지 카테고리 : " + categoryName);
-    // console.log("총페이지 게더 : " + gatherType);
+    console.log("게시글 총 페이지 진입/ 해당 카테고리 : " + categoryName);
     if (categoryName === "무비추천") gatherType = "";
     const page = 0;
     const size = 6;
@@ -91,10 +89,7 @@ const BoardApi = {
   },
   // 페이지에 해당 하는 보드 리스트
   getBoardList: async (page, sort, keyword, categoryName, gatherType) => {
-    console.log("리스트 키워드 : " + keyword);
-    console.log("리스트 카테고리 : " + categoryName);
-    console.log("리스트 게더 : " + gatherType);
-    console.log("리스트 페이지 : " + page);
+    console.log("게시글 리스트 진입/ 해당 페이지 : " + page);
     if (categoryName === "무비추천") gatherType = "";
     const size = 6;
     return await axios.get(
@@ -108,6 +103,7 @@ const BoardApi = {
 
   // 멤버 내 게시글 관련
   getMemTotalPage: async (type) => {
+    console.log("내 게시글 총 페이지 진입");
     const page = 0;
     const size = 6;
     return await axios.get(
@@ -117,6 +113,7 @@ const BoardApi = {
     );
   },
   getMemBoardList: async (page, type) => {
+    console.log("회원 게시글 불러오는중 페이지 : " + page);
     const size = 6;
     return await axios.get(
       Common.MV_DOMAIN +
@@ -128,6 +125,7 @@ const BoardApi = {
   // admin
   // 페이지 수 조회
   getAdminPages: async () => {
+    console.log("관리자 게시글 총 페이지 진입");
     const page = 0;
     const size = 10;
     return await axios.get(
@@ -137,6 +135,7 @@ const BoardApi = {
   },
   // 게시글 리스트 조회 (페이지네이션)
   getAdminBoardList: async (page) => {
+    console.log("관리자 게시글 불러오는 중 페이지 : " + page);
     return await axios.get(
       Common.MV_DOMAIN + `/board/admin/boardlist?page=${page - 1}&size=10`,
       Common.tokenHeader()

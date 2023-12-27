@@ -13,7 +13,9 @@ const Board = () => {
   const { category } = useParams();
   const [categorySel, setCategorySel] = useState("");
   const [keyword, setKeyword] = useState("");
-  const [isKeyword, setIsKeyword] = useState(false);
+
+  // 백 여러번 호출 방지
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!loginStatus) {
@@ -50,14 +52,14 @@ const Board = () => {
         id={category}
         keyword={keyword}
         setKeyword={setKeyword}
-        setIsKeyword={setIsKeyword}
+        setIsLoading={setIsLoading}
       />
       <BoardCardList
         category={categorySel}
         keyword={keyword}
-        isKeyword={isKeyword}
         setKeyword={setKeyword}
-        setIsKeyword={setIsKeyword}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
     </div>
   );

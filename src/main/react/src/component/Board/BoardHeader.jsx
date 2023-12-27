@@ -1,15 +1,9 @@
 import BoardComp from "./BoardHeaderStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-const BoardHeaderList = ({ id, keyword, setKeyword, setIsKeyword }) => {
-  const [inputSearch, setInputSearch] = useState("");
 
-  const changeValue = (e) => {
-    setInputSearch(e.target.value);
-  };
-
+const BoardHeaderList = ({ id, keyword, setKeyword, setIsLoading }) => {
   const { category, description } = (() => {
     switch (id) {
       case "gather":
@@ -90,7 +84,7 @@ const BoardHeaderList = ({ id, keyword, setKeyword, setIsKeyword }) => {
                 <FontAwesomeIcon
                   icon={faSearch}
                   onClick={() => {
-                    setIsKeyword(true);
+                    setIsLoading(true);
                   }}
                 />
               </div>

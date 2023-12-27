@@ -47,12 +47,13 @@ const Circle = styled.div`
     `}
 `;
 
-const ToggleButton = ({ onChange, gatherType }) => {
+const ToggleButton = ({ onChange, gatherType, setIsLoading }) => {
   const [toggle, setToggle] = useState(true);
 
   const clickedToggle = () => {
     setToggle(toggle ? false : true);
     gatherType === "온라인" ? onChange("오프라인") : onChange("온라인");
+    setIsLoading(true);
   };
 
   useEffect(() => {

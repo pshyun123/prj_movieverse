@@ -12,9 +12,9 @@ const BoardCardList = ({
   category,
   keyword,
   type,
-  isKeyword,
-  setIsKeyword,
   setKeyword,
+  isLoading,
+  setIsLoading,
 }) => {
   // 페이지 네이션 관련
   const [totalPage, setTotalPage] = useState(5);
@@ -26,13 +26,9 @@ const BoardCardList = ({
   // 페이지 수
   const fetchTotalPage = async () => {
     const res = await BoardApi.getTotalPage(keyword, category, gatherType);
-    console.log("총페이지 키워드 : " + keyword);
-    console.log("총페이지 카테고리 : " + category);
-    console.log("총페이지 게더 : " + gatherType);
     if (res.data !== null) {
       setTotalPage(res.data);
       setPage(1);
-      setIsKeyword(false);
       setKeyword("");
       if (category === "무비추천") {
         setGatherType("");
@@ -53,6 +49,8 @@ const BoardCardList = ({
     if (res.data !== null) {
       setBoardData(res.data);
     }
+    // 리스트 불러오기를 시도 후 로딩 false
+    setIsLoading(false);
   };
 
   // 회원 게시글 페이지 수
@@ -72,34 +70,36 @@ const BoardCardList = ({
     }
   };
 
+  // 새로운 조건의 리스트를 불러와야 하는 경우
   useEffect(() => {
-    category === "member"
-      ? Common.handleTokenAxios(fetchMemTotalPage)
-      : Common.handleTokenAxios(fetchTotalPage);
-    console.log("타입 : " + gatherType);
-  }, [category, sortBy, gatherType, type]);
-
-  useEffect(() => {
-    if (isKeyword) {
-      Common.handleTokenAxios(fetchTotalPage);
+    if (isLoading) {
+      category === "member"
+        ? Common.handleTokenAxios(fetchMemTotalPage)
+        : Common.handleTokenAxios(fetchTotalPage);
+      console.log("타입 : " + gatherType);
     }
-  }, [isKeyword]);
+  }, [isLoading]);
 
+  // 페이지만 변경하는 경우
   useEffect(() => {
     category === "member"
       ? Common.handleTokenAxios(() => fetchMemBoardList(page))
       : Common.handleTokenAxios(() => fetchBoardList(page));
   }, [page]);
 
+  // 카테고리를 새로 선택하는 경우 모임종류는 기본 온라인으로
   useEffect(() => {
-    console.log("카테고리" + category);
-
     if (category === "무비추천") {
       setGatherType("");
     } else if (category !== "무비추천") {
       setGatherType("온라인");
     }
+    setIsLoading(true);
   }, [category]);
+
+  useEffect(() => {
+    setIsLoading(true);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -113,6 +113,7 @@ const BoardCardList = ({
                 onChange={setGatherType}
                 category={category}
                 gatherType={gatherType}
+                setIsLoading={setIsLoading}
               />
             </div>
           )}
@@ -121,13 +122,19 @@ const BoardCardList = ({
             <ul className="sortArea">
               <li
                 className={sortBy === "recent" ? "active" : ""}
-                onClick={() => setSortBy("recent")}
+                onClick={() => {
+                  setSortBy("recent");
+                  setIsLoading(true);
+                }}
               >
                 최신순
               </li>
               <li
                 className={sortBy === "former" ? "active" : ""}
-                onClick={() => setSortBy("former")}
+                onClick={() => {
+                  setSortBy("former");
+                  setIsLoading(true);
+                }}
               >
                 과거순
               </li>

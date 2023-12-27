@@ -66,6 +66,9 @@ const GlobalStyle = createGlobalStyle`
   .container {
     max-width: 1200px;
     margin: 0 auto;
+    @media only screen and (max-width:1200px){
+      padding: 0 20px;
+    }
   }
   @media only screen and (max-width:768px) {
     body {
@@ -73,6 +76,7 @@ const GlobalStyle = createGlobalStyle`
     }
     .container {
       width: 90vw;
+      padding: 0;
     }
   }
 
