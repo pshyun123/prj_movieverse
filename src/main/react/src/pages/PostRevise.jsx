@@ -105,20 +105,20 @@ const PostRevise = () => {
 
   // 모달
   const [openModal, setModalOpen] = useState(false);
-  const closeModal = (num) => {
+  const closeModal = () => {
     setModalOpen(false);
+    navigate(-1);
   };
   const [modalMsg, setModalMsg] = useState("");
   const [modalHeader, setModalHeader] = useState("");
   const [modalType, setModalType] = useState(null);
   const [modalConfirm, setModalConfirm] = useState(null);
 
-  const handleModal = (header, msg, type, num) => {
+  const handleModal = (header, msg, type) => {
     setModalOpen(true);
     setModalHeader(header);
     setModalMsg(msg);
     setModalType(type);
-    setModalConfirm(num);
   };
   // 이 위치에 수정하는 api로 바꾸세요
   const updatePost = async (url) => {
@@ -132,7 +132,7 @@ const PostRevise = () => {
     );
     if (res.data) {
       console.log("저장 성공!");
-      handleModal("성공", "수정이 완료되었습니다.", true, 0);
+      handleModal("성공", "수정이 완료되었습니다.", false);
     }
   };
 
@@ -286,7 +286,7 @@ const PostRevise = () => {
             </div>
             <div className="buttonBox">
               <Button
-                children="등록하기"
+                children="수정하기"
                 active={true}
                 back="var(--BLUE)"
                 clickEvt={onSubmit}
@@ -308,10 +308,6 @@ const PostRevise = () => {
         header={modalHeader}
         children={modalMsg}
         type={modalType}
-        confirm={() => {
-          // 수정
-          navigate(`/board/post/${boardData.id}`);
-        }}
       />
     </>
   );
