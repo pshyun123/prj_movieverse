@@ -247,7 +247,7 @@ const MemberInfoChg = () => {
       Common.handleTokenAxios(saveMemberInfo);
     }
   };
-  const saveMemberInfo = async (url) => {
+  const saveMemberInfo = async (url = "") => {
     const originImage = imgSrc === basicProfile ? "" : imgSrc;
     const image = url !== "" ? url : originImage;
     const res = await MemberApi.changeMemberInfo(

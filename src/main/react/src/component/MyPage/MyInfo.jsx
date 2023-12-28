@@ -49,7 +49,7 @@ const MyInfoComp = styled.section`
         .userBox {
           margin-bottom: 20px;
           display: grid;
-          grid-template-columns: 20% 70%; //밑줄 길이 조절
+          grid-template-columns: 30% 70%; //밑줄 길이 조절
           p {
             padding: 10px 0;
             letter-spacing: 0.8px;
@@ -64,7 +64,9 @@ const MyInfoComp = styled.section`
               margin-right: 20px;
             }
             &:last-child {
+              padding-left: 10px;
               border-bottom: 1px solid white;
+              line-height: 1.2;
             }
           }
         }
@@ -89,20 +91,29 @@ const MyInfoComp = styled.section`
         width: 100%;
 
         .userProfile {
-          order: -1; /* .userContent보다 위로 이동 */
-          margin-bottom: 20px;
+          width: 100%;
+          margin: 0;
+          margin-bottom: 40px;
+          display: flex;
+          justify-content: center;
+          .profileImg {
+            width: 50%;
+            padding-bottom: 50%;
+          }
         }
 
         .userContent {
           width: 100%; /* 모바일에서 전체 너비로 */
+          padding: 0 50px;
           justify-content: center;
           /* align-items: center; */
           text-align: center;
+          .buttonBox {
+            padding-right: 0; /* 모바일에서 오른쪽 패딩 제거 */
+            justify-content: center; /* 가운데 정렬 */
+            margin-top: 70px;
+          }
         }
-      }
-      .buttonBox {
-        padding-right: 0; /* 모바일에서 오른쪽 패딩 제거 */
-        justify-content: center; /* 가운데 정렬 */
       }
     }
   }
