@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "board")
 @Getter
 @Setter
-@ToString
+
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
