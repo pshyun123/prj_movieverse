@@ -116,6 +116,24 @@ const NewPost = () => {
     }
   };
 
+  // 모달
+  const [openModal, setModalOpen] = useState(false);
+  const closeModal = (num) => {
+    setModalOpen(false);
+  };
+  const [modalMsg, setModalMsg] = useState("");
+  const [modalHeader, setModalHeader] = useState("");
+  const [modalType, setModalType] = useState(null);
+  const [modalConfirm, setModalConfirm] = useState(null);
+
+  const handleModal = (header, msg, type, num) => {
+    setModalOpen(true);
+    setModalHeader(header);
+    setModalMsg(msg);
+    setModalType(type);
+    setModalConfirm(num);
+  };
+
   const onSubmit = () => {
     if (imgSrc !== basicImg) {
       const storageRef = storage.ref();
@@ -144,19 +162,7 @@ const NewPost = () => {
     );
     if (res.data) {
       console.log("저장 성공!");
-      switch (selCategory) {
-        case "무비모임":
-          navigate("/board/gather");
-          break;
-        case "모임후기":
-          navigate("/board/recap");
-          break;
-        case "무비추천":
-          navigate("/board/recs");
-          break;
-        default:
-          console.log("카테고리 오류");
-      }
+      handleModal("성공", "등록이 완료 되었습니다.", true, 0);
     }
   };
 
@@ -305,6 +311,30 @@ const NewPost = () => {
           </div>
         </div>
       </NewPostComp>
+      <Modal
+        open={openModal}
+        close={closeModal}
+        header={modalHeader}
+        children={modalMsg}
+        type={modalType}
+        confirm={() => {
+          if (modalConfirm === 0) {
+            switch (selCategory) {
+              case "무비모임":
+                navigate("/board/gather");
+                break;
+              case "모임후기":
+                navigate("/board/recap");
+                break;
+              case "무비추천":
+                navigate("/board/recs");
+                break;
+              default:
+                console.log("카테고리 오류");
+            }
+          }
+        }}
+      />
     </>
   );
 };
