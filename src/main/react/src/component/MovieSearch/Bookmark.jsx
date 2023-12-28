@@ -54,13 +54,7 @@ const BookmarkComp = styled.div`
   }
 `;
 
-const Bookmark = ({
-  movieId,
-  handleModal,
-  setHideState,
-  sortType,
-  hideMovie,
-}) => {
+const Bookmark = ({ movieId, handleModal, sortType, hideMovie }) => {
   const context = useContext(UserContext);
   const { loginStatus } = context;
 
@@ -116,10 +110,6 @@ const Bookmark = ({
       console.log("북마크 해제 성공!");
       setBookMark();
       if (sortType === "member") {
-        // setHideState((prevHideState) => ({
-        //   ...prevHideState,
-        //   [movieId]: true,
-        // }));
         hideMovie(movieId);
       }
     }

@@ -135,6 +135,8 @@ const MovieCard = ({
 
   const hide = (hideState && hideState[movie.id]) || false;
 
+  console.log(`MovieCard rendering for movie ID: ${movie.id}`);
+
   return (
     <>
       <MovieCardComp className={hide ? "hide" : ""}>

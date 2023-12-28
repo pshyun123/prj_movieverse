@@ -29,7 +29,7 @@ const SearchMapBoxStyle = styled.section`
 const SearchMapBox = ({ sortType, keyword }) => {
   const [movieSearchData, setMovieSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [lastPage, setLastPage] = useState(false);
 
   const [hideState, setHideState] = useState({});
@@ -38,8 +38,6 @@ const SearchMapBox = ({ sortType, keyword }) => {
 
   const fetchMovieData = async () => {
     try {
-      setLoading(true);
-
       const apiCall =
         sortType === "member"
           ? () => BookmarkApi.getMemberMovie(currentPage, 8)
@@ -55,20 +53,15 @@ const SearchMapBox = ({ sortType, keyword }) => {
         // 현재 타입에 따라 currentPage 갱신
         setCurrentPage((prevPage) => prevPage + 1);
       }
-
-      setLoading(false);
     } catch (error) {
       console.error("영화 데이터를 불러오는 중 에러 발생:", error);
-      setLoading(false);
     }
   };
 
   const fetchFirstMovieData = async () => {
     try {
-      setCurrentPage(0);
       setMovieSearchData([]);
       setLastPage(false);
-      setLoading(true);
 
       const apiCall =
         sortType === "member"
@@ -78,52 +71,51 @@ const SearchMapBox = ({ sortType, keyword }) => {
 
       if (res.data !== null) {
         setMovieSearchData(res.data);
-        setLoading(false);
         setCurrentPage(1);
       }
     } catch (error) {
       console.error("영화 데이터를 불러오는 중 에러 발생:", error);
-      setLoading(false);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    if (sortType === "member") {
-      Common.handleTokenAxios(fetchFirstMovieData);
-    } else {
-      fetchFirstMovieData();
-    }
-
-    console.log("sortType" + sortType);
+    setCurrentPage(0);
+    fetchFirstMovieData();
   }, [sortType, keyword]);
 
   useEffect(() => {
-    console.log("currentPage" + currentPage);
+    setIsLoading(true);
   }, [currentPage]);
 
   useEffect(() => {
+    console.log("sortType" + sortType);
     console.log(keyword);
-    if (!loading && !lastPage) {
+
+    if (isLoading && !lastPage) {
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
-            if (sortType === "member") {
-              Common.handleTokenAxios(fetchMovieData);
-            } else {
-              fetchMovieData();
+            if (currentPage > 0) {
+              if (sortType === "member") {
+                Common.handleTokenAxios(fetchMovieData);
+              } else {
+                fetchMovieData();
+              }
             }
           }
         },
         { threshold: 1 }
       );
       observer.observe(end.current);
+      setIsLoading(true);
 
       // Cleanup function
       return () => {
         observer.disconnect();
       };
     }
-  }, [loading, lastPage, currentPage, keyword, hideState]);
+  }, [isLoading, currentPage]);
 
   // 북마크 해제시 목록에서 사라짐
   useEffect(() => {
@@ -153,10 +145,10 @@ const SearchMapBox = ({ sortType, keyword }) => {
   const [modalType, setModalType] = useState(null);
 
   // 모달 닫기
-  const closeModal = (num) => {
+  const closeModal = () => {
     setModalOpen(false);
   };
-  const handleModal = (header, msg, type, num) => {
+  const handleModal = (header, msg, type) => {
     setModalOpen(true);
     setModalHeader(header);
     setModalMsg(msg);
@@ -191,7 +183,7 @@ const SearchMapBox = ({ sortType, keyword }) => {
                 )
             )}
         </div>
-        {!loading && <div ref={end}></div>}
+        {isLoading && <div ref={end}></div>}
         <Modal
           open={openModal}
           close={closeModal}
