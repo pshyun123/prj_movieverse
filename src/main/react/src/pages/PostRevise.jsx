@@ -8,6 +8,7 @@ import basicImg from "../images/congrats.png";
 import MemberApi from "../api/MemberApi";
 import Common from "../util/Common";
 import BoardApi from "../api/BoardApi";
+import Modal from "../util/Modal";
 
 const PostRevise = () => {
   const [boardData, setBoardData] = useState("");
@@ -67,7 +68,6 @@ const PostRevise = () => {
   const [imgSrc, setImgSrc] = useState(basicImg);
   const [file, setFile] = useState("");
   const [url, setUrl] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
 
   // 입력받은 이미지 파일 주소
   const handleFileInputChange = (e) => {
@@ -103,6 +103,23 @@ const PostRevise = () => {
     Common.handleTokenAxios(fetchBoardData);
   }, []);
 
+  // 모달
+  const [openModal, setModalOpen] = useState(false);
+  const closeModal = (num) => {
+    setModalOpen(false);
+  };
+  const [modalMsg, setModalMsg] = useState("");
+  const [modalHeader, setModalHeader] = useState("");
+  const [modalType, setModalType] = useState(null);
+  const [modalConfirm, setModalConfirm] = useState(null);
+
+  const handleModal = (header, msg, type, num) => {
+    setModalOpen(true);
+    setModalHeader(header);
+    setModalMsg(msg);
+    setModalType(type);
+    setModalConfirm(num);
+  };
   // 이 위치에 수정하는 api로 바꾸세요
   const updatePost = async (url) => {
     const res = await BoardApi.updateBoard(
@@ -115,7 +132,7 @@ const PostRevise = () => {
     );
     if (res.data) {
       console.log("저장 성공!");
-      navigate(`/board/post/${boardData.id}`);
+      handleModal("성공", "수정이 완료되었습니다.", true, 0);
     }
   };
 
@@ -285,6 +302,17 @@ const PostRevise = () => {
           </div>
         </div>
       </NewPostComp>
+      <Modal
+        open={openModal}
+        close={closeModal}
+        header={modalHeader}
+        children={modalMsg}
+        type={modalType}
+        confirm={() => {
+          // 수정
+          navigate(`/board/post/${boardData.id}`);
+        }}
+      />
     </>
   );
 };
