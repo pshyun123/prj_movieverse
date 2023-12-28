@@ -22,21 +22,46 @@ const NewPost = () => {
   // 카테고리 및 모임형식 관련
   const [selCategory, setSelCategory] = useState("");
   const [selGather, setSelGather] = useState("");
+  const [isCategory, setIsCategory] = useState("");
+  const [isGather, setIsGather] = useState("");
 
   const onCategoryChange = (e) => {
-    setSelCategory(e.target.value);
+    const currVal = e.target.value;
+    setSelCategory(currVal);
+    if (currVal !== "") {
+      setIsCategory(true);
+      if (currVal === "무비추천") setIsGather(true);
+    }
+    if (currVal !== "무비추천" && selGather === "") {
+      setIsGather(false);
+    }
   };
   const onGatherChange = (e) => {
-    setSelGather(e.target.value);
+    const currVal = e.target.value;
+    setSelGather(currVal);
+    if (currVal === "" && selCategory !== "무비추천") {
+      setIsGather(false);
+    } else if (currVal !== "" && selCategory !== "무비추천") {
+      setIsGather(true);
+    }
   };
 
   const [inputTitle, setInputTitle] = useState("");
   const [inputContents, setInputContents] = useState("");
+  const [isTitle, setIsTitle] = useState("");
+  const [isContents, setIsContents] = useState("");
+
   const onInputTitleChange = (e) => {
-    setInputTitle(e.target.value);
+    const currVal = e.target.value;
+    setInputTitle(currVal);
+    if (currVal.length > 0) setIsTitle(true);
+    else setIsTitle(false);
   };
   const onInputContentsChange = (e) => {
-    setInputContents(e.target.value);
+    const currVal = e.target.value;
+    setInputContents(currVal);
+    if (currVal.length > 0) setIsContents(true);
+    else setIsContents(false);
   };
 
   useEffect(() => {
@@ -75,6 +100,7 @@ const NewPost = () => {
   const [imgSrc, setImgSrc] = useState(basicImg);
   const [file, setFile] = useState("");
   const [url, setUrl] = useState("");
+  const [isImage, setIsImage] = useState(false);
 
   // 입력받은 이미지 파일 주소
   const handleFileInputChange = (e) => {
@@ -86,6 +112,7 @@ const NewPost = () => {
       setImgSrc(objectUrl);
       // 파이어베이스에 보내기위해 변수에 저장
       setFile(selectedFile);
+      setIsImage(true);
     }
   };
 
@@ -132,22 +159,6 @@ const NewPost = () => {
       }
     }
   };
-
-  // 등록하기 버튼 활성화
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    const requiredData =
-      inputTitle.length > 0 &&
-      inputContents.length > 0 &&
-      selCategory.length > 0 &&
-      ((selCategory !== "무비추천" && selGather.length > 0) ||
-        selGather.length === 0) &&
-      (imgSrc !== basicImg || imgSrc.startsWith("blob:"));
-
-    setIsActive(requiredData);
-    console.log("이미지 데이터 : ", imgSrc);
-  }, [inputTitle, inputContents, imgSrc, selCategory, selGather]);
 
   return (
     <>
@@ -277,7 +288,9 @@ const NewPost = () => {
             <div className="buttonBox">
               <Button
                 children="등록하기"
-                active={isActive}
+                active={
+                  isCategory && isGather && isTitle && isContents && isImage
+                }
                 back="var(--BLUE)"
                 clickEvt={onSubmit}
               />
