@@ -55,13 +55,13 @@ function App() {
               <Route path="/payment/result" element={<PaymentRst />} />
               <Route path="/utiltest" element={<UtilTest />}></Route>
             </Route>
-            <Route path="/*" element={<NotFound />} />
-            <Route path="/login/admin" element={<AdminLogin />} />
+            <Route path="/logina" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="/admin" element={<AdminMember />} />
               <Route path="/admin/faq" element={<AdminFaq />} />
               <Route path="/admin/board" element={<AdminBoard />} />
             </Route>
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </Router>
       </UserStore>

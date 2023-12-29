@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Button from "../../../util/Button";
 import basicProfile from "../../../images/faceIcon/faceIcon1.png";
 
@@ -50,16 +50,7 @@ const TrComp = styled.tr`
   }
 `;
 
-const Tr = ({
-  data,
-  index,
-  handleModal,
-  setEditCategory,
-  setEditType,
-  setEditId,
-  revise,
-  setRevise,
-}) => {
+const Tr = ({ data, index, revise, setRevise, clickOk, clickDel, editId }) => {
   const [confirmRevise, setConfirmRevise] = useState(false);
   const [categorySel, setCategorySel] = useState(data.categoryName);
   const [categoryActive, setCategoryActive] = useState(true);
@@ -69,25 +60,42 @@ const Tr = ({
   const toDate = new Date(data.regDate);
   const regDate = toDate.toISOString().split("T")[0];
 
+  console.log("TR" + data.id + "업데이트 되는 중");
+
   useEffect(() => {
-    // console.log("Category : " + selCategory);
-    // console.log("Gather : " + selGather);
-    if (categorySel === "무비추천") {
-      setTypeSel("sel");
-      setGatherActive(true);
+    console.log("TR" + data.id + "마운트 되는 중");
+  }, []);
+
+  // 첫 렌더링(마운트) 상태 여부
+  const isInitialRender = useRef(true);
+
+  useEffect(() => {
+    if (!isInitialRender.current) {
+      if (categorySel === "무비추천") {
+        setTypeSel("sel");
+        setGatherActive(true);
+        console.log("TR" + data.id + "카테고리 무비추천");
+      }
+    } else {
+      isInitialRender.current = false;
     }
   }, [categorySel, typeSel]);
+
   useEffect(() => {
-    setConfirmRevise(false);
-    setRevise(false);
-    setCategoryActive(true);
-    setGatherActive(true);
-    if (revise === "back") {
-      setCategorySel(data.categoryName);
-      setTypeSel(data.gatherType);
+    if (revise === true || revise === "back") {
+      console.log("TR" + data.id + "revise 영향");
+      setConfirmRevise(false);
+      setRevise(false);
+      setCategoryActive(true);
+      setGatherActive(true);
+      if (revise === "back") {
+        setCategorySel(data.categoryName);
+        setTypeSel(data.gatherType);
+      }
     }
   }, [revise]);
 
+  // 수정 버튼 클릭
   const clickRevise = () => {
     setCategoryActive(false);
     if (categorySel !== "영화추천" && categorySel !== "sel")
@@ -95,33 +103,21 @@ const Tr = ({
     setConfirmRevise(true);
   };
 
+  // 대분류 변경
   const onChangeCategory = (e) => {
     setCategorySel(e.target.value);
     if (e.target.value !== "무비추천") {
       setGatherActive(false);
       if (data.gatherType === "") {
         setTypeSel("오프라인");
-      } else setTypeSel(data.gatherType);
+      } else
+        setTypeSel((prevType) => (prevType === "sel" ? "오프라인" : prevType));
     }
   };
+
+  // 소분류 변경
   const onChangeType = (e) => {
     setTypeSel(e.target.value);
-  };
-
-  const clickOk = () => {
-    handleModal("확인", "수정하시겠습니까?", true, 0);
-    setEditCategory(categorySel);
-    if (categorySel === "무비추천") {
-      setEditType("");
-    } else {
-      setEditType(typeSel);
-    }
-    setEditId(data.id);
-  };
-
-  const clickDel = () => {
-    handleModal("삭제", "삭제하시겠습니까?", true, 1);
-    setEditId(data.id);
   };
 
   return (
@@ -183,7 +179,9 @@ const Tr = ({
             width="80px"
             height="30px"
             active={true}
-            clickEvt={clickOk}
+            clickEvt={() => {
+              clickOk(categorySel, typeSel, data.id);
+            }}
           />
         ) : (
           <Button
@@ -206,10 +204,26 @@ const Tr = ({
           width="80px"
           height="30px"
           active={true}
-          clickEvt={clickDel}
+          clickEvt={() => clickDel(data.id)}
         />
       </td>
     </TrComp>
   );
 };
-export default Tr;
+
+const MemoizedTr = React.memo(Tr, (prevProps, nextProps) => {
+  const isTargetTr = prevProps.data.id === nextProps.editId;
+
+  return (
+    (isTargetTr && prevProps.revise === nextProps.revise) ||
+    (!isTargetTr &&
+      prevProps.confirmRevise === nextProps.confirmRevise &&
+      prevProps.categorySel === nextProps.categorySel &&
+      prevProps.typeSel === nextProps.typeSel &&
+      prevProps.categoryActive === nextProps.categoryActive &&
+      prevProps.gatherActive === nextProps.gatherActive &&
+      prevProps.data.id === nextProps.data.id)
+  );
+});
+
+export default MemoizedTr;

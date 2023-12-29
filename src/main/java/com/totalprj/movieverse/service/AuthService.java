@@ -163,10 +163,11 @@ public class AuthService {
     // 리프레시 토큰올 액세스 토큰 재 발급
     public AccessTokenDto refreshAccessToken(String refreshToken) {
         log.info("refreshToken : {}", refreshToken);
-        log.info("refreshExist : {}", refreshTokenRepository.existsByRefreshToken(refreshToken));
+        log.info("일반refreshExist : {}", refreshTokenRepository.existsByRefreshToken(refreshToken));
+        log.info("관리자refreshExist : {}", refreshAdminRepository.existsByRefreshToken(refreshToken));
 
         //DB에 일치하는 refreshToken이 있으면
-        if(refreshTokenRepository.existsByRefreshToken(refreshToken)) {
+        if(refreshTokenRepository.existsByRefreshToken(refreshToken) || refreshAdminRepository.existsByRefreshToken(refreshToken)) {
             // refreshToken 검증
             try {
                 if(tokenProvider.validateToken(refreshToken)) {

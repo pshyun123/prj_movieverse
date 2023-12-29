@@ -1,13 +1,11 @@
 import { styled } from "styled-components";
 import Button from "../../util/Button";
 import EditFaqModal from "../../component/Administor/AdmimFaq/EditFaqModal";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import FaqTr from "../../component/Administor/AdmimFaq/FaqElement";
 import Modal from "../../util/Modal";
 import FaqApi from "../../api/FaqApi";
 import Common from "../../util/Common";
-import axios from "axios";
 
 const AdminFaqComp = styled.div`
   padding-top: 8%;
@@ -64,7 +62,6 @@ const AdminFaqComp = styled.div`
 `;
 
 const AdminFaq = () => {
-  const navigate = useNavigate();
   const [faqData, setFaqData] = useState([]);
 
   const [titleVal, setTitleVal] = useState("");
@@ -114,10 +111,6 @@ const AdminFaq = () => {
 
   useEffect(() => {
     bringData();
-  }, []);
-
-  useEffect(() => {
-    Common.handleTokenAxios(fetchFaqList);
   }, []);
 
   // 삭제 모달

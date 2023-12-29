@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
-import Button from "../../util/Button";
-import { useState, useEffect } from "react";
-import Tr from "../../component/Administor/AdminBoard/TableElement";
+import { useState, useEffect, useCallback } from "react";
+import MemoizedTr from "../../component/Administor/AdminBoard/TableElement";
 import PaginationUtil from "../../util/Pagination/Pagination";
 import BoardApi from "../../api/BoardApi";
 import Common from "../../util/Common";
@@ -70,10 +69,10 @@ const AdminBoard = () => {
 
   // 페이지 api 정의
   const fetchTotalPage = async () => {
+    setPage(1);
     const res = await BoardApi.getAdminPages();
     if (res.data !== null) {
       setTotalPage(res.data);
-      setPage(1);
       Common.handleTokenAxios(fetchDataList(1));
     }
   };
@@ -97,19 +96,45 @@ const AdminBoard = () => {
     setModalOpen(false);
     setRevise("back");
   };
-  const handleModal = (header, msg, type, num) => {
+
+  const handleModal = useCallback((header, msg, type, num) => {
     setModalOpen(true);
     setModalHeader(header);
     setModalMsg(msg);
     setModalType(type);
     setConfirm(num);
-  };
+  }, []);
 
   const [revise, setRevise] = useState(false);
   const [editCategory, setEditCategory] = useState("");
   const [editType, setEditType] = useState("");
   const [editId, setEditId] = useState("");
 
+  // 확인 버튼 클릭
+  const clickOk = useCallback(
+    (categorySel, typeSel, id) => {
+      handleModal("확인", "수정하시겠습니까", true, 0);
+      setEditCategory(categorySel);
+      if (categorySel === "무비추천") {
+        setEditType("");
+      } else {
+        setEditType(typeSel);
+      }
+      setEditId(id);
+    },
+    [handleModal, setEditCategory, setEditType, setEditId]
+  );
+
+  // 삭제 버튼 클릭
+  const clickDel = useCallback(
+    (id) => {
+      handleModal("삭제", "삭제하시겠습니까?", true, 1);
+      setEditId(id);
+    },
+    [handleModal, setEditId]
+  );
+
+  // 게시글 이동
   const moveBoard = async () => {
     const res = await BoardApi.updateBoard(editId, editCategory, editType);
     if (res.data) {
@@ -117,6 +142,7 @@ const AdminBoard = () => {
     }
   };
 
+  // 게시글 삭제
   const deleteBoard = async () => {
     const res = await BoardApi.deleteBoard(editId);
     if (res.data) {
@@ -147,16 +173,15 @@ const AdminBoard = () => {
               {/* map으로 반복할 요소 */}
               {dataList &&
                 dataList.map((data, index) => (
-                  <Tr
+                  <MemoizedTr
                     key={data.id}
                     data={data}
                     index={index}
-                    handleModal={handleModal}
-                    setEditCategory={setEditCategory}
-                    setEditType={setEditType}
-                    setEditId={setEditId}
                     revise={revise}
                     setRevise={setRevise}
+                    clickOk={clickOk}
+                    clickDel={clickDel}
+                    editId={editId}
                   />
                 ))}
             </tbody>
