@@ -4,11 +4,10 @@ import profileimg from "../../images/faceIcon/faceIcon1.png";
 import profileimg2 from "../../images/faceIcon/faceIcon2.png";
 import Button from "../../util/Button";
 
-/*마이페이지 myinfo */
+
 const MyInfoComp = styled.section`
-  width: 100%; /* 보통 높이값은 따로 주지 않음!(배너를 잡을 경우에는 높이값을 줌) */
+  width: 100%; /* 보통 높이값은 따로 주지 않는다(배너를 잡을 경우에는 높이값을 준다) */
   padding-top: 80px;
-  /* outline: 1px solid yellow; */
   margin-bottom: 100px;
 
   .container {
@@ -18,7 +17,6 @@ const MyInfoComp = styled.section`
       font-size: 3rem;
     }
     .wrapper {
-      /* outline: 1px solid yellow; */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,7 +24,6 @@ const MyInfoComp = styled.section`
         width: 250px;
         margin-right: 5%;
         padding-bottom: 5%;
-        /* outline: 1px solid red; */
         .profileImg {
           width: 250px;
           padding-bottom: 250px;
@@ -45,7 +42,6 @@ const MyInfoComp = styled.section`
       .userContent {
         width: 50%;
         letter-spacing: -0.8px;
-        /* outline: 1px solid pink; */
         .userBox {
           margin-bottom: 20px;
           display: grid;
@@ -73,7 +69,6 @@ const MyInfoComp = styled.section`
       }
     }
     .buttonBox {
-      /* outline: 1px solid blue; */
       display: flex;
       justify-content: end;
       padding-right: 10%;
@@ -122,6 +117,7 @@ const MyInfoComp = styled.section`
 const MyInfo = ({ memberInfo }) => {
   const navigate = useNavigate();
 
+   // 해당 버튼 클릭시 어느 페이지로 이동할지 정해준다
   const tomemberpost = () => {
     navigate("/mypage/memberpost");
   };
