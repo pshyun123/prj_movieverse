@@ -4,7 +4,6 @@ import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import Button from "../util/Button";
 import face from "../images/faceIcon/faceIcon4.png";
-import Modal from "../util/Modal";
 import MemberApi from "../api/MemberApi";
 import Common from "../util/Common";
 
@@ -107,18 +106,14 @@ const Payment = () => {
     IMP.init("imp78148083");
 
     const data = {
-      // pg: "tosspay",// 토스페이 간편결제
-      // pg: "kakaopay", // 카카오페이 간편결제
       pg: "kcp.AO09C", // NHN KCP 결제 방식 사용
       pay_method: "card",
       merchant_uid: `mid_${new Date().getTime()}`,
       amount: "2900",
       name: "결제 테스트",
       buyer_name: "홍길동",
-      // buyer_tel: "01012345678",
       buyer_email: "14279625@gmail.com",
       buyer_addr: "구천면로 000-00",
-      // buyer_postcode: "01234",
     };
 
     IMP.request_pay(data, callback);
