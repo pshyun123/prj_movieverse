@@ -10,11 +10,12 @@ import { Input, InputButton, Address } from "../component/Join/JoinInput";
 import Button from "../util/Button";
 import MemberApi from "../api/MemberApi";
 import Common from "../util/Common";
+import useTokenAxios from "../hooks/useTokenAxios";
 
 const MemberInfoChg = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { loginStatus, setLoginStatus, setIsKikiMember } = context;
+  const { setLoginStatus, setIsKikiMember } = context;
 
   // 회원정보
   const [memberInfo, setMemberInfo] = useState(null);
@@ -22,7 +23,6 @@ const MemberInfoChg = () => {
   // 프로필 관련 ////////////////////////////////////////////////////
   const [imgSrc, setImgSrc] = useState("");
   const [file, setFile] = useState("");
-  const [url, setUrl] = useState("");
 
   // 입력받은 이미지 파일 주소
   const handleFileInputChange = (e) => {
@@ -135,9 +135,7 @@ const MemberInfoChg = () => {
     }
   };
 
-  const checkPw = () => {
-    Common.handleTokenAxios(fetchIsOriginPw);
-  };
+  const checkPw = useTokenAxios(fetchIsOriginPw);
 
   // 새 비밀번호
   const onChangePw = (e) => {
@@ -226,8 +224,10 @@ const MemberInfoChg = () => {
     }
   };
 
+  const getMemberInfo = useTokenAxios(fetchMemberInfo);
+
   useEffect(() => {
-    Common.handleTokenAxios(fetchMemberInfo);
+    getMemberInfo();
   }, []);
 
   // 회원 정보 수정
@@ -236,17 +236,20 @@ const MemberInfoChg = () => {
       const storageRef = storage.ref();
       const fileRef = storageRef.child(file.name);
       fileRef.put(file).then(() => {
-        console.log("저장성공!");
+        // console.log("저장성공!");
         fileRef.getDownloadURL().then((url) => {
-          console.log("저장경로 확인 : " + url);
-          setUrl(url);
-          Common.handleTokenAxios(() => saveMemberInfo(url));
+          // console.log("저장경로 확인 : " + url);
+          //수정
+          saveMemberInfo(url);
         });
       });
     } else {
-      Common.handleTokenAxios(saveMemberInfo);
+      saveMemberInfo();
     }
   };
+
+  const clickSave = useTokenAxios(onSubmit);
+
   const saveMemberInfo = async (url = "") => {
     const originImage = imgSrc === basicProfile ? "" : imgSrc;
     const image = url !== "" ? url : originImage;
@@ -266,9 +269,9 @@ const MemberInfoChg = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("현재 정보 : " + inputOriginPw);
-  }, [inputOriginPw]);
+  // useEffect(() => {
+  //   console.log("현재 정보 : " + inputOriginPw);
+  // }, [inputOriginPw]);
   const toMyInfo = () => {
     navigate(-1);
   };
@@ -282,6 +285,7 @@ const MemberInfoChg = () => {
       navigate("/");
     }
   };
+  const memberWithdraw = useTokenAxios(onWithdraw);
 
   return (
     <>
@@ -376,7 +380,7 @@ const MemberInfoChg = () => {
                 width="45%"
                 height="50px"
                 active={isAlias && isPhone && isAddr}
-                clickEvt={onSubmit}
+                clickEvt={clickSave}
               />
               <Button
                 children={"취소하기"}
@@ -411,7 +415,7 @@ const MemberInfoChg = () => {
           if (modalConfirm === 0) {
             navigate("/mypage");
           } else if (modalConfirm === 1) {
-            Common.handleTokenAxios(onWithdraw);
+            memberWithdraw();
           }
         }}
       />

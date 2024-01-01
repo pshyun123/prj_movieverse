@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Button from "../../util/Button";
 import Common from "../../util/Common";
@@ -76,7 +76,7 @@ const ChatBox = ({ memberInfo, roomId }) => {
   const fetchChatName = async () => {
     try {
       const res = await ChatApi.getChatName(roomId);
-      console.log("결과결과:" + res.data.roomName);
+      // console.log("결과결과:" + res.data.roomName);
       if (res.data !== null) {
         setChatName(res.data.roomName);
       }
@@ -145,7 +145,7 @@ const ChatBox = ({ memberInfo, roomId }) => {
     }
     ws.current.onmessage = (evt) => {
       const data = JSON.parse(evt.data);
-      console.log(data.message);
+      // console.log(data.message);
       setChatList((prevItems) => [...prevItems, data]);
     };
 
@@ -177,7 +177,7 @@ const ChatBox = ({ memberInfo, roomId }) => {
 
   useEffect(() => {
     fetchChatName();
-    console.log("chatName : " + chatName);
+    // console.log("chatName : " + chatName);
   }, []);
 
   return (
@@ -196,12 +196,6 @@ const ChatBox = ({ memberInfo, roomId }) => {
                 alias={chat.senderAlias}
               />
             ))}
-            {/* <Sender
-              profile={basicProfile}
-              alias={"햄스터"}
-              msg={"안녕하세요!"}
-            />
-            <User msg={"안녕하세요!"} /> */}
           </div>
           <div className="chatInput">
             <input
