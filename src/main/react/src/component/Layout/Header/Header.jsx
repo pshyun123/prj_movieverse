@@ -22,14 +22,14 @@ const Header = () => {
   const [active, setOpen] = useState("");
   const [icon, setIcon] = useState(active === "" ? faBars : faXmark);
 
-  useEffect(() => {
-    console.log(loginStatus);
-  }, [loginStatus]);
+  // useEffect(() => {
+  //   console.log(loginStatus);
+  // }, [loginStatus]);
 
   const isMobile = useMediaQuery({
     query: "(max-width:768px)",
   });
-  console.log("isMobile : " + isMobile);
+  // console.log("isMobile : " + isMobile);
 
   const mMenuClick = () => {
     if (isMobile) {
@@ -61,15 +61,13 @@ const Header = () => {
               src={Logo}
               alt="로고"
               onClick={() => {
-                loginStatus === "partner"
-                  ? navigate("/partnermain")
-                  : navigate("/");
+                navigate("/");
               }}
             />
           </div>
           <Nav active={active} togle={mMenuClick} />
           <div className="log-icon">
-            {loginStatus === "" ? (
+            {loginStatus === "" || loginStatus === "RELOGIN" ? (
               <FontAwesomeIcon
                 icon={faUser}
                 onClick={() => {

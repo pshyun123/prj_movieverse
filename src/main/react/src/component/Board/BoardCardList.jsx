@@ -5,8 +5,8 @@ import ToggleButton from "../Board/BoardToggleBtn";
 import Button from "../../util/Button";
 import { useNavigate } from "react-router-dom";
 import BoardApi from "../../api/BoardApi";
-import Common from "../../util/Common";
 import PaginationUtil from "../../util/Pagination/Pagination";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const BoardCardList = ({
   category,
@@ -24,20 +24,6 @@ const BoardCardList = ({
   const [boardData, setBoardData] = useState([]);
   const [gatherType, setGatherType] = useState("온라인");
 
-  // 페이지 수
-  const fetchTotalPage = async () => {
-    const res = await BoardApi.getTotalPage(keyword, category, gatherType);
-    if (res.data !== null) {
-      setTotalPage(res.data);
-      setPage(1);
-      setKeyword("");
-      if (category === "무비추천") {
-        setGatherType("");
-      }
-      await Common.handleTokenAxios(() => fetchBoardList(1));
-    }
-  };
-
   // 게시글 리스트
   const fetchBoardList = async (page) => {
     const res = await BoardApi.getBoardList(
@@ -53,15 +39,23 @@ const BoardCardList = ({
     // 리스트 불러오기를 시도 후 로딩 false
     setIsLoading(false);
   };
+  const getFirstPage = useTokenAxios(() => fetchBoardList(1));
+  const getSelPage = useTokenAxios(() => fetchBoardList(page));
 
-  // 회원 게시글 페이지 수
-  const fetchMemTotalPage = async () => {
-    const res = await BoardApi.getMemTotalPage(type);
+  // 페이지 수
+  const fetchTotalPage = async (page) => {
+    const res = await BoardApi.getTotalPage(keyword, category, gatherType);
     if (res.data !== null) {
       setTotalPage(res.data);
-      await Common.handleTokenAxios(() => fetchMemBoardList(1));
+      setPage(page);
+      setKeyword("");
+      if (category === "무비추천") {
+        setGatherType("");
+      }
+      await getFirstPage();
     }
   };
+  const getTotalPage = useTokenAxios(() => fetchTotalPage(1));
 
   // 회원 게시글 리스트
   const fetchMemBoardList = async (page) => {
@@ -71,21 +65,29 @@ const BoardCardList = ({
     }
     setIsLoading(false);
   };
+  const getMemBoardList = useTokenAxios(() => fetchMemBoardList(page));
+
+  // 회원 게시글 페이지 수
+  const fetchMemTotalPage = async () => {
+    setPage(1);
+    const res = await BoardApi.getMemTotalPage(type);
+    if (res.data !== null) {
+      setTotalPage(res.data);
+      getMemBoardList();
+    }
+  };
+  const getMemTotalPage = useTokenAxios(fetchMemTotalPage);
 
   // 새로운 조건의 리스트를 불러와야 하는 경우
   useEffect(() => {
     if (isLoading) {
-      category === "member"
-        ? Common.handleTokenAxios(fetchMemTotalPage)
-        : Common.handleTokenAxios(fetchTotalPage);
+      category === "member" ? getMemTotalPage() : getTotalPage();
     }
   }, [isLoading]);
 
   // 페이지만 변경하는 경우
   useEffect(() => {
-    category === "member"
-      ? Common.handleTokenAxios(() => fetchMemBoardList(page))
-      : Common.handleTokenAxios(() => fetchBoardList(page));
+    category === "member" ? getMemBoardList() : getSelPage();
   }, [page]);
 
   useEffect(() => {

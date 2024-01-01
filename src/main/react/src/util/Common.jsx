@@ -26,7 +26,7 @@ const Common = {
   // 헤더
   tokenHeader: () => {
     const accessToken = Common.getAccessToken();
-    console.log("헤더 토큰 : " + accessToken);
+    // console.log("헤더 토큰 : " + accessToken);
     return {
       headers: {
         "Content-Type": "application/json",
@@ -39,8 +39,8 @@ const Common = {
   handleUnathorized: async () => {
     const accessToken = Common.getAccessToken();
     const refreshToken = Common.getRefreshToken();
-    console.log("refreshToken : " + refreshToken);
-    console.log("재발행 전 : " + accessToken);
+    // console.log("refreshToken : " + refreshToken);
+    // console.log("재발행 전 : " + accessToken);
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -52,7 +52,7 @@ const Common = {
         refreshToken,
         config
       );
-      console.log(res.data);
+      // console.log(res.data);
       Common.setAccessToken(res.data.accessToken);
       return true;
     } catch (err) {

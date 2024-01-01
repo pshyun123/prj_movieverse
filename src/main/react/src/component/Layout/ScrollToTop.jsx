@@ -12,18 +12,7 @@ const ScrollToTop = () => {
         topRef.current.scrollIntoView({ behavior: "smooth" });
       }
     };
-    // if (topRef.current) {
-    //   topRef.current.scrollIntoView({ behavior: "smooth" });
-    // }
     scrollToTop();
-
-    // const delay = 500; // milliseconds
-    // const timeoutId = setTimeout(() => {
-    //   navigate(location.pathname);
-    // }, delay);
-
-    // // Cleanup the timeout to avoid navigating after unmounting
-    // return () => clearTimeout(timeoutId);
   }, [location, navigate]);
 
   return <div ref={topRef} tabIndex="-1" />;
