@@ -10,10 +10,8 @@ const NotFoundComp = styled.section`
     text-align: center;
     justify-content: center;
     flex-direction: column;
-    /* outline: 1px solid red; */
 
     .ErrorBox {
-      /* outline: 1px solid white; */
       margin-top: 100px;
       margin-bottom: 50px;
       text-align: center;
@@ -46,6 +44,7 @@ const NotFoundComp = styled.section`
 const NotFound = () => {
   const navigate = useNavigate();
 
+// 404페이지가 뜰 경우 홈으로 돌아갈 수 있게 버튼 클릭시 홈으로 이동되는 경로를 설정 해줌
   const toMain = () => {
     navigate("/");
   };
