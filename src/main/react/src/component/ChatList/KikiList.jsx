@@ -3,9 +3,9 @@ import { styled } from "styled-components";
 import Kiki from "./Kiki";
 import { useEffect, useState } from "react";
 import ChatApi from "../../api/ChatApi";
-import Common from "../../util/Common";
 import { useNavigate } from "react-router-dom";
 import NewChatModal from "./NewChatModal";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const KikiListComp = styled.section`
   width: 100%;
@@ -106,56 +106,37 @@ const KikiList = () => {
     }
   };
 
+  // 새 채팅방 생성
   const createChatRoom = async () => {
-    const accessToken = Common.getAccessToken();
-    console.log("새 채팅방 생성 진입");
-    try {
-      const res = await ChatApi.createNewChat(inputVal);
-      if (res.data !== null) {
-        console.log("roomId : ", res.data);
-        navigate(`/kikilist/${res.data}`);
-      }
-    } catch (err) {
-      if (err.response.status === 401) {
-        await Common.handleUnathorized();
-        const newToken = Common.getAccessToken();
-        if (newToken !== accessToken) {
-          try {
-            const res = await ChatApi.createNewChat(inputVal);
-            if (res.data !== null) {
-              console.log("토큰 재발행 회원정보 : " + res.data);
-              navigate(`/kikilist/${res.data}`);
-            }
-          } catch (err) {
-            console.log(err);
-            setErrMsg("채팅방 생성에 실패했습니다.");
-          }
-        }
-      }
+    const res = await ChatApi.createNewChat(inputVal);
+    if (res.data !== null) {
+      // console.log("roomId : ", res.data);
+      navigate(`/kikilist/${res.data}`);
     }
   };
+  const newChatRoom = useTokenAxios(createChatRoom);
 
+  // 채팅 리스트 호출
   const fetchKikiList = async () => {
-    try {
-      console.log("kikilist 부르는중");
-      const res = await ChatApi.getChatList();
-      if (res.data !== null) {
-        console.log("채팅방 목록 : " + res.data);
-        setKikiList(res.data);
-      }
-    } catch (err) {
-      console.log(err);
+    // console.log("kikilist 부르는중");
+    const res = await ChatApi.getChatList();
+    if (res.data !== null) {
+      // console.log("채팅방 목록 : " + res.data);
+      setKikiList(res.data);
     }
   };
+  const getKikiList = useTokenAxios(fetchKikiList);
 
+  // 채팅방 진입
   const enterKiki = (roomId) => {
-    console.log("kiki 진입 중 : " + roomId);
+    // console.log("kiki 진입 중 : " + roomId);
     navigate(`/kikilist/${roomId}`);
   };
 
+  // 1초 간격으로 채팅방 현황 체크
   useEffect(() => {
     const intervalId = setInterval(() => {
-      Common.handleTokenAxios(fetchKikiList);
+      getKikiList();
     }, 1000);
     return () => {
       clearInterval(intervalId);
@@ -204,7 +185,7 @@ const KikiList = () => {
           errMsg={errMsg}
           onChangeInput={onChangeInput}
           confirm={() => {
-            createChatRoom();
+            newChatRoom();
           }}
         />
       </KikiListComp>
