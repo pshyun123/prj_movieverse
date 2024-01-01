@@ -6,11 +6,12 @@ import { UserContext } from "../context/UserStore";
 
 const Board = () => {
   const navigate = useNavigate();
+  const { category } = useParams();
 
   const context = useContext(UserContext);
   const { loginStatus } = context;
 
-  const { category } = useParams();
+  // 카테고리/ 키워드 관리
   const [categorySel, setCategorySel] = useState("");
   const [keyword, setKeyword] = useState("");
 
@@ -39,12 +40,12 @@ const Board = () => {
         navigate("/notfound");
         break;
     }
-    console.log("category" + category);
+    // console.log("category" + category);
   }, [category]);
 
-  useEffect(() => {
-    console.log("검색키워드 : " + keyword);
-  }, [keyword]);
+  // useEffect(() => {
+  //   console.log("검색키워드 : " + keyword);
+  // }, [keyword]);
 
   return (
     <div>

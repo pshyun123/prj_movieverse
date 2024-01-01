@@ -1,6 +1,6 @@
 import BoardCard from "./BoardCard";
 import BoardCardStyle from "../Board/BoardCardStyle";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ToggleButton from "../Board/BoardToggleBtn";
 import Button from "../../util/Button";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ const BoardCardList = ({
   isLoading,
   setIsLoading,
 }) => {
+  const navigate = useNavigate();
   // 페이지 네이션 관련
   const [totalPage, setTotalPage] = useState(5);
   const [page, setPage] = useState(1);
@@ -87,7 +88,6 @@ const BoardCardList = ({
       : Common.handleTokenAxios(() => fetchBoardList(page));
   }, [page]);
 
-  // 카테고리를 새로 선택하는 경우 모임종류는 기본 온라인으로
   useEffect(() => {
     if (category === "무비추천") {
       setGatherType("");
@@ -97,11 +97,13 @@ const BoardCardList = ({
     setIsLoading(true);
   }, [category]);
 
-  useEffect(() => {
-    setIsLoading(true);
-  }, []);
-
-  const navigate = useNavigate();
+  const handleSetGatherType = useCallback(
+    (newGatherType) => {
+      setGatherType(newGatherType);
+      setIsLoading(true);
+    },
+    [setGatherType]
+  );
 
   return (
     <BoardCardStyle>
@@ -110,10 +112,9 @@ const BoardCardList = ({
           {category !== "무비추천" && category !== "member" && (
             <div className="gatherTypeList">
               <ToggleButton
-                onChange={setGatherType}
+                onChange={handleSetGatherType}
                 category={category}
                 gatherType={gatherType}
-                setIsLoading={setIsLoading}
               />
             </div>
           )}

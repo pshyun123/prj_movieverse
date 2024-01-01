@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const ToggleBtn = styled.button`
   width: 25%;
@@ -47,36 +47,40 @@ const Circle = styled.div`
     `}
 `;
 
-const ToggleButton = ({ onChange, gatherType, setIsLoading }) => {
-  const [toggle, setToggle] = useState(true);
+const ToggleButton = React.memo(
+  ({ onChange, gatherType }) => {
+    const [toggle, setToggle] = useState(true);
 
-  const clickedToggle = () => {
-    setToggle(toggle ? false : true);
-    gatherType === "온라인" ? onChange("오프라인") : onChange("온라인");
-    setIsLoading(true);
-  };
+    console.log("토글버튼");
 
-  useEffect(() => {
-    if (gatherType === "온라인") {
-      setToggle(true);
-      onChange("온라인");
-    } else if (gatherType === "오프라인") {
-      setToggle(false);
-      onChange("오프라인");
-    }
-  }, [gatherType]);
+    const clickedToggle = () => {
+      setToggle(toggle ? false : true);
+      gatherType === "온라인" ? onChange("오프라인") : onChange("온라인");
+    };
 
-  return (
-    <>
-      <ToggleBtn onClick={clickedToggle}>
-        <div className="btnBox">
-          <BtnText $toggle={!toggle}>온라인</BtnText>
-          <BtnText $toggle={toggle}>오프라인</BtnText>
-        </div>
-        <Circle $toggle={toggle} />
-      </ToggleBtn>
-    </>
-  );
-};
+    useEffect(() => {
+      if (gatherType === "온라인") {
+        setToggle(true);
+      } else if (gatherType === "오프라인") {
+        setToggle(false);
+      }
+    }, [gatherType]);
+
+    return (
+      <>
+        <ToggleBtn onClick={clickedToggle}>
+          <div className="btnBox">
+            <BtnText $toggle={!toggle}>온라인</BtnText>
+            <BtnText $toggle={toggle}>오프라인</BtnText>
+          </div>
+          <Circle $toggle={toggle} />
+        </ToggleBtn>
+      </>
+    );
+  },
+  (prevProps, nextProps) =>
+    prevProps.gatherType === nextProps.gatherType &&
+    prevProps.toggle === nextProps.toggle
+);
 
 export default ToggleButton;

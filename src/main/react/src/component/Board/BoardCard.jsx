@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { useEffect, useState } from "react";
+import React from "react";
 
 const BoardCardComp = styled.div`
   display: flex;
@@ -91,43 +91,47 @@ const ImgBoxComp = styled.div`
   background-repeat: no-repeat;
 `;
 
-const BoardCard = ({ board }) => {
-  const navigate = useNavigate();
-  const toDate = new Date(board.regDate);
-  const regDate = toDate.toISOString().split("T")[0];
+const BoardCard = React.memo(
+  ({ board }) => {
+    const navigate = useNavigate();
+    const toDate = new Date(board.regDate);
+    const regDate = toDate.toISOString().split("T")[0];
+    console.log("렌더링 보드 : " + board.id);
 
-  return (
-    <>
-      <BoardCardComp
-        className="mapBox"
-        onClick={() => {
-          navigate(`/board/post/${board.id}`);
-        }}
-      >
-        <ImgBoxComp $imgsrc={board.image} />
-        <div className="textBox">
-          <div className="categoryGatherBox">
-            <div className="categoryGather">
-              <p className="category">{board.categoryName}</p>
-              {board.categoryName !== "무비추천" && (
-                <p className="gather">{board.gatherType}</p>
-              )}
+    return (
+      <>
+        <BoardCardComp
+          className="mapBox"
+          onClick={() => {
+            navigate(`/board/post/${board.id}`);
+          }}
+        >
+          <ImgBoxComp $imgsrc={board.image} />
+          <div className="textBox">
+            <div className="categoryGatherBox">
+              <div className="categoryGather">
+                <p className="category">{board.categoryName}</p>
+                {board.categoryName !== "무비추천" && (
+                  <p className="gather">{board.gatherType}</p>
+                )}
+              </div>
+              <div className="regdate">
+                <p className="regdate">{regDate}</p>
+              </div>
             </div>
-            <div className="regdate">
-              <p className="regdate">{regDate}</p>
+            <div className="contentBox">
+              <h3>{board.title}</h3>
+              <p className="content">{board.boardContent}</p>
+            </div>
+            <div className="countBox">
+              <p>조회수 {board.count}</p>
             </div>
           </div>
-          <div className="contentBox">
-            <h3>{board.title}</h3>
-            <p className="content">{board.boardContent}</p>
-          </div>
-          <div className="countBox">
-            <p>조회수 {board.count}</p>
-          </div>
-        </div>
-      </BoardCardComp>
-    </>
-  );
-};
+        </BoardCardComp>
+      </>
+    );
+  },
+  (prevProps, nextProps) => prevProps.board.id === nextProps.board.id
+);
 
 export default BoardCard;

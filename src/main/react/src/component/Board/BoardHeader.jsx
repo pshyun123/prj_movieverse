@@ -4,6 +4,9 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 const BoardHeaderList = ({ id, keyword, setKeyword, setIsLoading }) => {
+  const navigate = useNavigate();
+
+  // 보드 파라미터에 따라 배너 내용 변화
   const { category, description } = (() => {
     switch (id) {
       case "gather":
@@ -26,7 +29,6 @@ const BoardHeaderList = ({ id, keyword, setKeyword, setIsLoading }) => {
         return { category: "", description: "" };
     }
   })();
-  const navigate = useNavigate();
 
   const onClickMenu = (num) => {
     switch (num) {
