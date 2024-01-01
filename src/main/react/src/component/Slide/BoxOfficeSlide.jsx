@@ -7,8 +7,6 @@ import "swiper/css/bundle";
 import styled from "styled-components";
 import MovieCard from "../MovieSearch/MovieCard";
 import OttBoxApi from "../../api/OttBoxApi";
-import { useNavigate } from "react-router-dom";
-import Modal from "../../util/Modal";
 
 const BoxOfficeSlideStyle = styled.div`
   padding: 50px 0;
@@ -18,7 +16,8 @@ const BoxOfficeSlideStyle = styled.div`
     width: 100%;
     position: relative;
     width: 100%;
-    position: relative;
+
+    // 스와이퍼 버튼
     .swiper-button {
       color: #494949;
       background-color: white;
@@ -29,21 +28,21 @@ const BoxOfficeSlideStyle = styled.div`
       border-radius: 50%;
       cursor: pointer;
       z-index: 10;
+
+      // 스와이퍼 버튼 hover
       &:hover {
         background-color: var(--LIGHTVIO);
       }
 
+      // 스와이퍼의 화살표 버튼
       &::after {
         font-size: 1.2rem;
         font-weight: 600;
         color: var(--DARKBLUE);
       }
-      &.swiper-button-prev {
-      }
-      &.swiper-button-next {
-      }
+
+      // 스와이퍼 비활성화시 버튼 상태
       &.swiper-button-disabled {
-        z-index: 10;
         cursor: default;
         pointer-events: auto;
         &:hover {
@@ -51,38 +50,11 @@ const BoxOfficeSlideStyle = styled.div`
         }
       }
     }
-
-    .swiper-wrapper {
-      align-items: center;
-      .slide {
-        width: 30%;
-      }
-    }
   }
 `;
 
 const BoxOfficeSlide = () => {
   const [movieData, setMovieData] = useState([]);
-
-  const navigate = useNavigate();
-
-  //Modal
-  // 여기서부터
-  const [openModal, setModalOpen] = useState(false);
-  const [modalMsg, setModalMsg] = useState("");
-  const [modalHeader, setModalHeader] = useState("");
-  const [modalType, setModalType] = useState(null);
-
-  // 모달 닫기
-  const closeModal = (num) => {
-    setModalOpen(false);
-  };
-  const handleModal = (header, msg, type, num) => {
-    setModalOpen(true);
-    setModalHeader(header);
-    setModalMsg(msg);
-    setModalType(type);
-  };
 
   //박스오피스 영화정보 리스트 가져오기
   const fetchBoxOfficeList = async () => {
@@ -99,7 +71,7 @@ const BoxOfficeSlide = () => {
     }
   };
 
-  // useEffect [] => 빈 배열은 처음 마운트되고 한번만 실행
+  // 처음 마운트되고 한번만 영화정보 가져 옴
   useEffect(() => {
     try {
       fetchBoxOfficeList();
@@ -135,25 +107,17 @@ const BoxOfficeSlide = () => {
           },
         }}
       >
+        {/* 영화 데이터를 매핑하여 Swiper 슬라이드로 표시 */}
         {movieData &&
           movieData.map((movie) => (
             <SwiperSlide className="slide" key={movie.id}>
-              <MovieCard movie={movie} handleModal={handleModal} />
+              <MovieCard movie={movie} />
             </SwiperSlide>
           ))}
+        {/* Swiper 화살표 버튼 */}
         <div className="swiper-button-prev swiper-button"></div>
         <div className="swiper-button-next swiper-button"></div>
       </Swiper>
-      <Modal
-        open={openModal}
-        close={closeModal}
-        header={modalHeader}
-        children={modalMsg}
-        type={modalType}
-        confirm={() => {
-          navigate("/login");
-        }}
-      />
     </BoxOfficeSlideStyle>
   );
 };

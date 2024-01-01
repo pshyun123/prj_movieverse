@@ -1,11 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
 import BoxOfficeSlide from "../Slide/BoxOfficeSlide";
 
 import "swiper/css";
 import "swiper/css/effect-cards";
-// import { EffectCards } from "swiper/modules";
 
 const BoxOfficeComp = styled.section`
   width: 100%;
@@ -41,14 +38,11 @@ const BoxOfficeComp = styled.section`
       .boxOfficeBox {
         .textBox {
           h3 {
-            font-weight: 600;
             font-size: 1.4rem;
           }
           hr {
             width: 120px;
           }
-        }
-        .cardSwiper {
         }
       }
     }
