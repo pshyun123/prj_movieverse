@@ -129,7 +129,7 @@ const OTT = () => {
       <div className="bgBox"></div>
       <div className="container">
         <div className="ottRankBox">
-          <h3>OTT별 순위</h3>
+          <h3>OTT별 추천</h3>
           <hr />
           <div className="ottBtnBox">
             <div
