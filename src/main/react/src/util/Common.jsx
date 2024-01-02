@@ -60,29 +60,6 @@ const Common = {
       return false;
     }
   },
-
-  // 토큰 필요한 api의 경우, 401오류일 경우 재발행 / 재발행 후 함수 재실행
-  handleTokenAxios: async (axiosEvt) => {
-    const accessToken = Common.getAccessToken();
-    try {
-      await axiosEvt();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        console.log("AccessToken 만료");
-        await Common.handleUnathorized();
-        const newToken = Common.getAccessToken();
-        if (newToken !== accessToken) {
-          try {
-            await axiosEvt();
-          } catch (err) {
-            console.log(err);
-          }
-        } else {
-          console.log(err);
-        }
-      }
-    }
-  },
 };
 
 export default Common;

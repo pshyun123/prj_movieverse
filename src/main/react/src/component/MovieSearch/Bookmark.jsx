@@ -110,7 +110,7 @@ const Bookmark = ({ movieId, handleModal, sortType, hideMovie }) => {
   }, [marked]);
 
   useEffect(() => {
-    if (loginStatus === "true") {
+    if (loginStatus) {
       setBookMark();
     } else {
       setMarked(false);

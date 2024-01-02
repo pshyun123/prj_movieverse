@@ -60,7 +60,7 @@ const Layout = () => {
         "보안을 위해 다시 로그인해주세요",
         true
       );
-    } else if (loginStatus === true) {
+    } else if (loginStatus) {
       getIsKikiMember();
     }
   }, [loginStatus]);

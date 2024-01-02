@@ -5,7 +5,7 @@ import MovieApi from "../../api/MovieApi";
 import Modal from "../../util/Modal";
 import { useNavigate } from "react-router-dom";
 import BookmarkApi from "../../api/BookmarkApi";
-import Common from "../../util/Common";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const SearchMapBoxStyle = styled.section`
   .noBookmark {
@@ -57,6 +57,7 @@ const SearchMapBox = ({ sortType, keyword }) => {
       console.error("영화 데이터를 불러오는 중 에러 발생:", error);
     }
   };
+  const getMovieData = useTokenAxios(fetchMovieData);
 
   const fetchFirstMovieData = async () => {
     try {
@@ -98,7 +99,7 @@ const SearchMapBox = ({ sortType, keyword }) => {
           if (entries[0].isIntersecting) {
             if (currentPage > 0) {
               if (sortType === "member") {
-                Common.handleTokenAxios(fetchMovieData);
+                getMovieData();
               } else {
                 fetchMovieData();
               }

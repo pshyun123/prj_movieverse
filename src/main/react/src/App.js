@@ -20,7 +20,6 @@ import ChatList from "./pages/ChatList";
 import Chat from "./pages/Chat";
 import Payment from "./pages/Payment";
 import PaymentRst from "./pages/PaymentRst";
-import UtilTest from "./pages/UtilTest";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminMember from "./pages/Admin/AdminMember";
 import AdminFaq from "./pages/Admin/AdminFaq";
@@ -53,7 +52,6 @@ function App() {
               <Route path="/kikilist/:roomId" element={<Chat />} />
               <Route path="/payment" element={<Payment />} />
               <Route path="/payment/result" element={<PaymentRst />} />
-              <Route path="/utiltest" element={<UtilTest />}></Route>
             </Route>
             <Route path="/logina" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
