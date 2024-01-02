@@ -26,7 +26,7 @@ public class MovieService {
         movieRepository.save(movie);
     }
 
-    // 타이틀, 감독만 뽑아낸 List<Map<String, String>>
+    // 타이틀, 감독만 뽑아낸 List(중복 제거용)
     public List<MovieDto> checkExist(List<MovieDto> movieList) {
         log.info("movieLsit for check : {}", movieList);
         List<MovieDto> checkList = new ArrayList<>();
@@ -122,7 +122,7 @@ public class MovieService {
                 .collect(Collectors.toList());
     }
 
-
+    // 영화 정렬, 검색 및 페이지네이션 통합
     public List<MovieSearchDto> getProcessedMovieList(int page, int size, String sort, String keyword) {
 
         List<MovieSearchDto> movieList = new ArrayList<>();
@@ -163,7 +163,7 @@ public class MovieService {
         return movieSearchDto;
     }
 
-    // 리액트 요청에 맞춰서 전체 정보 반환 D
+    // 리액트 요청에 맞춰서 전체 정보 반환
     public MovieResDto convertToMovieInfo(Movie movie) {
         MovieResDto movieResDto = new MovieResDto();
         movieResDto.setId(movie.getId());

@@ -1,6 +1,5 @@
 package com.totalprj.movieverse.controller;
 
-import com.totalprj.movieverse.dto.MovieDto;
 import com.totalprj.movieverse.dto.MovieResDto;
 import com.totalprj.movieverse.dto.MovieSearchDto;
 import com.totalprj.movieverse.service.MovieService;
