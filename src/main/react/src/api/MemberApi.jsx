@@ -134,7 +134,7 @@ const MemberApi = {
   // admin - 회원 조회
   memberPage: async (page) => {
     return await axios.get(
-      Common.MV_DOMAIN + `/member/admin/list/page?page=${page}&size=10`,
+      Common.MV_DOMAIN + `/member/admin/list/page?page=${page - 1}&size=10`,
       Common.tokenHeader()
     );
   },
@@ -143,7 +143,7 @@ const MemberApi = {
     const page = 0;
     const size = 10;
     return await axios.get(
-      Common.MV_DOMAIN + `/member/admin/list/count?size=${size}`,
+      Common.MV_DOMAIN + `/member/admin/list/count?page=${page}&size=${size}`,
       Common.tokenHeader()
     );
   },

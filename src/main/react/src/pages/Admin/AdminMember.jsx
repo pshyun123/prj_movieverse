@@ -82,9 +82,10 @@ const AdminMember = () => {
     }
   };
   const getAdminMemList = useTokenAxios(() => adminMemList(page));
-  const getFirstPage = useTokenAxios(() => adminMemList(0));
+  const getFirstPage = useTokenAxios(() => adminMemList(1));
 
   const fetchPageList = async () => {
+    setPage(1);
     const res = await MemberApi.getTotalPage();
     if (res.data !== null) {
       setTotalPage(res.data);
@@ -123,7 +124,7 @@ const AdminMember = () => {
     if (res.data) {
       // console.log("회원 삭제 성공");
       closeModal();
-      getFirstPage(); // 멤버 삭제하고 나면 멤버리스트 다시 불러줘!(리스트 부를 때 토큰 필요)
+      getTotalPage(); // 멤버 삭제하고 나면 멤버리스트 다시 불러줘!(리스트 부를 때 토큰 필요)
     }
   };
   const memDelete = useTokenAxios(deleteMem);

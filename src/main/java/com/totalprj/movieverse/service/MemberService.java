@@ -11,7 +11,6 @@ import com.totalprj.movieverse.repository.MemberRepository;
 import com.totalprj.movieverse.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.asm.Advice;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,7 +64,6 @@ public class MemberService {
             member.setPhone(memberReqDto.getPhone());
             member.setAddr(memberReqDto.getAddr());
             member.setImage(memberReqDto.getImage());
-            member.setRegDate(LocalDateTime.now());
             memberRepository.save(member);
             return true;
         }catch(Exception e){
