@@ -3,9 +3,9 @@ import MembershipJoin from "../component/MyPage/MembershipJoin";
 import BookMarkList from "../component/MyPage/BookMarkList";
 import { useState, useEffect, useContext } from "react";
 import MemberApi from "../api/MemberApi";
-import Common from "../util/Common";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserStore";
+import useTokenAxios from "../hooks/useTokenAxios";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -21,36 +21,17 @@ const MyPage = () => {
   }, []); // []<-화면 마운트시 최초 한번 실행
 
   const memberDetail = async () => {
-    const accessToken = Common.getAccessToken();
-    try {
-      const res = await MemberApi.getMemberDetail();
-      console.log("상세회원정보 : " + res.data);
-      if (res.data !== null) {
-        setMemberInfo(res.data);
-      }
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        await Common.handleUnathorized();
-        const newToken = Common.getAccessToken();
-        if (newToken !== accessToken) {
-          try {
-            const res = await MemberApi.getMemberDetail();
-            if (res.data !== null) {
-              console.log("토큰 재발행 회원정보 : " + res.data);
-              setMemberInfo(res.data);
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        }
-      } else {
-        console.log(err);
-      }
+    const res = await MemberApi.getMemberDetail();
+    console.log("상세회원정보 : " + res.data);
+    if (res.data !== null) {
+      setMemberInfo(res.data);
     }
   };
+  const getMemberDetail = useTokenAxios(memberDetail);
+
   useEffect(() => {
     if (loginStatus) {
-      memberDetail();
+      getMemberDetail();
     }
   }, []);
 

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Button from "../util/Button";
 import face from "../images/faceIcon/faceIcon4.png";
 import MemberApi from "../api/MemberApi";
-import Common from "../util/Common";
+import useTokenAxios from "../hooks/useTokenAxios";
 
 const PayComp = styled.section`
   width: 100%;
@@ -101,19 +101,36 @@ const Payment = () => {
     };
   }, []);
 
+  // 멤버십 정보 저장
+  const membershipUpdate = async () => {
+    const res = await MemberApi.saveMembership(true);
+    console.log(res.data);
+    if (res.data) {
+      navigate("/payment/result");
+      console.log("멤버십 저장 성공");
+    } else {
+      console.log("멤버십 저장 실패!");
+    }
+  };
+  const updateMembership = useTokenAxios(membershipUpdate);
+
   const onClickPayment = () => {
     const { IMP } = window;
     IMP.init("imp78148083");
 
     const data = {
+      // pg: "tosspay",// 토스페이 간편결제
+      // pg: "kakaopay", // 카카오페이 간편결제
       pg: "kcp.AO09C", // NHN KCP 결제 방식 사용
       pay_method: "card",
       merchant_uid: `mid_${new Date().getTime()}`,
       amount: "2900",
       name: "결제 테스트",
       buyer_name: "홍길동",
+      // buyer_tel: "01012345678",
       buyer_email: "14279625@gmail.com",
       buyer_addr: "구천면로 000-00",
+      // buyer_postcode: "01234",
     };
 
     IMP.request_pay(data, callback);
@@ -131,25 +148,12 @@ const Payment = () => {
     } = response;
 
     if (success) {
-      Common.handleTokenAxios(membershipUpdate);
-
+      updateMembership();
       console.log("결제 성공");
       // 토큰
       setIsKikiMember(true);
     } else {
       alert(`결제 실패: ${error_msg}`);
-    }
-  };
-
-  // 멤버십 정보 저장
-  const membershipUpdate = async () => {
-    const res = await MemberApi.saveMembership(true);
-    console.log(res.data);
-    if (res.data) {
-      navigate("../payment/result");
-      console.log("멤버십 저장 성공");
-    } else {
-      console.log("멤버십 저장 실패!");
     }
   };
 

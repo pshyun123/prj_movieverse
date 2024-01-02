@@ -1,9 +1,7 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import profileimg from "../../images/faceIcon/faceIcon1.png";
-import profileimg2 from "../../images/faceIcon/faceIcon2.png";
 import Button from "../../util/Button";
-
 
 const MyInfoComp = styled.section`
   width: 100%; /* 보통 높이값은 따로 주지 않는다(배너를 잡을 경우에는 높이값을 준다) */
@@ -117,7 +115,7 @@ const MyInfoComp = styled.section`
 const MyInfo = ({ memberInfo }) => {
   const navigate = useNavigate();
 
-   // 해당 버튼 클릭시 어느 페이지로 이동할지 정해준다
+  // 해당 버튼 클릭시 어느 페이지로 이동할지 정해준다
   const tomemberpost = () => {
     navigate("/mypage/memberpost");
   };

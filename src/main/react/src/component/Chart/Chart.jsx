@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./chart.css";
 import { styled } from "styled-components";
-import Common from "../../util/Common";
-import axios from "axios";
 import {
   LineChart,
   Line,
@@ -13,6 +10,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import MemberApi from "../../api/MemberApi";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const ChartComp = styled.div`
   .chart {
@@ -41,50 +40,39 @@ const ChartComp = styled.div`
 export default function Chart() {
   const [monthlyUserData, setMonthlyUserData] = useState([]);
 
+  const fetchMonthlyUserData = async () => {
+    const res = await MemberApi.getMonthlyData();
+    if (res.data !== null) {
+      // 월 속성 기준으로 monthlyUSerData 배열 정렬
+      const monthOrder = [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월",
+      ];
+
+      const sortedMonthlyUserData = res.data.sort((a, b) => {
+        const monthA = monthOrder.indexOf(a.month);
+        const monthB = monthOrder.indexOf(b.month);
+        return monthA - monthB;
+      });
+
+      setMonthlyUserData(sortedMonthlyUserData);
+    }
+  };
+  const getMonthlyUserData = useTokenAxios(fetchMonthlyUserData);
+
   useEffect(() => {
-    const fetchMonthlyUserData = async () => {
-      try {
-        console.log("월정보 가져오는 중");
-        const response = await axios.get(
-          Common.MV_DOMAIN + "/member/admin/monthly",
-          Common.tokenHeader()
-        );
-        if (response.data !== null) {
-          // 월 속성 기준으로 monthlyUSerData 배열 정렬
-          const monthOrder = [
-            "1월",
-            "2월",
-            "3월",
-            "4월",
-            "5월",
-            "6월",
-            "7월",
-            "8월",
-            "9월",
-            "10월",
-            "11월",
-            "12월",
-          ];
-
-          const sortedMonthlyUserData = response.data.sort((a, b) => {
-            const monthA = monthOrder.indexOf(a.month);
-            const monthB = monthOrder.indexOf(b.month);
-            return monthA - monthB;
-          });
-
-          setMonthlyUserData(response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching monthly user data:", error);
-      }
-    };
-
-    Common.handleTokenAxios(fetchMonthlyUserData);
+    getMonthlyUserData();
   }, []);
-
-  // useEffect(() => {
-  //   console.log("montly" + monthlyUserData[0].month);
-  // }, [monthlyUserData]);
 
   return (
     <ChartComp>

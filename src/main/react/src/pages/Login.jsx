@@ -107,8 +107,8 @@ const Login = () => {
   const [modalMsg, setModalMsg] = useState("");
 
   useEffect(() => {
-    console.log("id:" + inputEmail);
-    console.log("pw:" + inputPw);
+    // console.log("id:" + inputEmail);
+    // console.log("pw:" + inputPw);
 
     // 이메일 + 비밀번호 입력시 로그인 버튼 활성화
     if (inputEmail.length > 0 && inputPw.length > 0) setIsActive(true);
@@ -119,10 +119,10 @@ const Login = () => {
     console.log("로그인!");
     try {
       const res = await MemberApi.login(inputEmail, inputPw);
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.grantType === "Bearer") {
-        console.log("accessToken : " + res.data.accessToken);
-        console.log("refreshToken : " + res.data.refreshToken);
+        // console.log("accessToken : " + res.data.accessToken);
+        // console.log("refreshToken : " + res.data.refreshToken);
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);
         setLoginStatus(true);

@@ -4,7 +4,7 @@ import Modal from "../../../util/Modal";
 import EditModal from "./EditCommentModal";
 import { useState } from "react";
 import CommnetApi from "../../../api/CommentApi";
-import Common from "../../../util/Common";
+import useTokenAxios from "../../../hooks/useTokenAxios";
 
 const Comment = ({ comment, fetchCommentList, userAlias }) => {
   const dateTimeString = comment.commentRegDate;
@@ -37,10 +37,8 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
       fetchCommentList();
     }
   };
-  const delCommnet = () => {
-    console.log("Comment 삭제 ! 테스트");
-    Common.handleTokenAxios(deleteComment);
-  };
+
+  const delComment = useTokenAxios(deleteComment);
 
   //   댓글 수정
 
@@ -70,15 +68,11 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
     console.log("commentId : " + comment.commentId);
     if (res.data !== null) {
       console.log("댓글 수정 성공");
-      //   setEditModalContent(comment.commentContent);
       fetchCommentList(); // 수정 후 댓글 목록 다시 불러오기
       closeEditModal(); // 모달 닫기
     }
   };
-  const modiComment = () => {
-    console.log("Comment 수정 ! 테스트" + modiComment);
-    Common.handleTokenAxios(commentModify);
-  };
+  const modiComment = useTokenAxios(commentModify);
 
   return (
     <>
@@ -128,9 +122,7 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
             header={modalHeader}
             children={modalMsg}
             type={modalType}
-            confirm={() => {
-              delCommnet();
-            }}
+            confirm={() => delComment()}
           />
           <EditModal
             open={openEditModal}
@@ -139,9 +131,7 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
             contentVal={editModalContent}
             onChangeContent={setEditModalContent}
             type={true}
-            confirm={() => {
-              modiComment();
-            }}
+            confirm={() => modiComment()}
           />
         </div>
       </div>

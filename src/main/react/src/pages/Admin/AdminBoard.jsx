@@ -66,6 +66,7 @@ const AdminBoard = () => {
     }
   };
   const getDataList = useTokenAxios(() => fetchDataList(page));
+  const getFirstList = useTokenAxios(() => fetchDataList(1));
 
   // 페이지 api 정의
   const fetchTotalPage = async () => {
@@ -73,7 +74,7 @@ const AdminBoard = () => {
     const res = await BoardApi.getAdminPages();
     if (res.data !== null) {
       setTotalPage(res.data);
-      getDataList();
+      getFirstList();
     }
   };
   const getTotalPage = useTokenAxios(fetchTotalPage);

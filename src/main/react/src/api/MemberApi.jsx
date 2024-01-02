@@ -115,6 +115,13 @@ const MemberApi = {
       Common.tokenHeader()
     );
   },
+  // admin - 월별 회원정보 조회
+  getMonthlyData: async () => {
+    return await axios.get(
+      Common.MV_DOMAIN + "/member/admin/monthly",
+      Common.tokenHeader()
+    );
+  },
 
   // admin - 회원 전체 조회
   memberGet: async () => {

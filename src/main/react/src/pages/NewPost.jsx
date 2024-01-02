@@ -7,8 +7,8 @@ import { NewPostComp, RadioBox } from "../component/NewPost/NewPostStyle";
 import basicImg from "../images/congrats.png";
 import Modal from "../util/Modal";
 import MemberApi from "../api/MemberApi";
-import Common from "../util/Common";
 import BoardApi from "../api/BoardApi";
+import useTokenAxios from "../hooks/useTokenAxios";
 
 const NewPost = () => {
   const [currentDate, setCurrentDate] = useState("");
@@ -18,6 +18,7 @@ const NewPost = () => {
     const res = await MemberApi.getMemberDetail();
     if (res.data !== null) setMemberInfo(res.data);
   };
+  const getMemberDetail = useTokenAxios(fetchMemberDetail);
 
   // 카테고리 및 모임형식 관련
   const [selCategory, setSelCategory] = useState("");
@@ -70,10 +71,10 @@ const NewPost = () => {
     if (selCategory === "무비추천") setSelGather("");
   }, [selCategory, selGather]);
 
-  useEffect(() => {
-    console.log("title : " + inputTitle);
-    console.log("contents : " + inputContents);
-  }, [inputTitle, inputContents]);
+  // useEffect(() => {
+  //   console.log("title : " + inputTitle);
+  //   console.log("contents : " + inputContents);
+  // }, [inputTitle, inputContents]);
 
   //날짜
   useEffect(() => {
@@ -87,7 +88,7 @@ const NewPost = () => {
 
     setCurrentDate(getCurrentDate());
 
-    Common.handleTokenAxios(fetchMemberDetail); // 멤버 정보 가져옴
+    getMemberDetail(); // 멤버 정보 가져옴
   }, []);
 
   // 게시판 리스트로 이동
@@ -99,7 +100,6 @@ const NewPost = () => {
   // 이미지 업로드
   const [imgSrc, setImgSrc] = useState(basicImg);
   const [file, setFile] = useState("");
-  const [url, setUrl] = useState("");
   const [isImage, setIsImage] = useState(false);
 
   // 입력받은 이미지 파일 주소
@@ -150,18 +150,18 @@ const NewPost = () => {
       const storageRef = storage.ref();
       const fileRef = storageRef.child(file.name);
       fileRef.put(file).then(() => {
-        console.log("저장성공!");
+        // console.log("저장성공!");
         fileRef.getDownloadURL().then((url) => {
-          console.log("저장경로 확인 : " + url);
-          setUrl(url);
-          console.log("url" + url);
-          Common.handleTokenAxios(() => newPost(url));
+          // console.log("저장경로 확인 : " + url);
+          // console.log("url" + url);
+          newPost(url);
         });
       });
     } else {
-      Common.handleTokenAxios(newPost);
+      newPost();
     }
   };
+  const clickSave = useTokenAxios(onSubmit);
 
   const newPost = async (url) => {
     const res = await BoardApi.saveNewPost(
@@ -309,7 +309,7 @@ const NewPost = () => {
                   isCategory && isGather && isTitle && isContents && isImage
                 }
                 back="var(--BLUE)"
-                clickEvt={onSubmit}
+                clickEvt={clickSave}
               />
               <Button
                 children="목록보기"

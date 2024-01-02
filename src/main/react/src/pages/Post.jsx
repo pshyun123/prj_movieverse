@@ -3,11 +3,11 @@ import { PostComp } from "../component/Post/PostStyle";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../util/Button";
 import BoardApi from "../api/BoardApi";
-import Common from "../util/Common";
 import CommentList from "../component/Board/Comment/CommentList";
 import MemberApi from "../api/MemberApi";
 import Modal from "../util/Modal";
 import profileimg from "../images/faceIcon/faceIcon1.png";
+import useTokenAxios from "../hooks/useTokenAxios";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -45,13 +45,6 @@ const Post = () => {
     }
   };
 
-  const fetchPostCounter = async () => {
-    const res = await BoardApi.boardCounter(postId);
-    if (res.data) {
-      Common.handleTokenAxios(fetchBoardData);
-    }
-  };
-
   const fetchBoardData = async () => {
     console.log("API 요청 전");
     const res = await BoardApi.boardDetail(postId);
@@ -62,6 +55,15 @@ const Post = () => {
       setRegDate(toDate.toISOString().split("T")[0]);
     }
   };
+  const getBoardData = useTokenAxios(fetchBoardData);
+
+  const fetchPostCounter = async () => {
+    const res = await BoardApi.boardCounter(postId);
+    if (res.data) {
+      getBoardData();
+    }
+  };
+  const getPostCounter = useTokenAxios(fetchPostCounter);
 
   const fetchUserDetail = async () => {
     const res = await MemberApi.getMemberDetail();
@@ -69,6 +71,7 @@ const Post = () => {
       setUserAlias(res.data.alias);
     }
   };
+  const getUserDetail = useTokenAxios(fetchUserDetail);
 
   const deletePost = async () => {
     const res = await BoardApi.deleteBoard(postId);
@@ -76,10 +79,11 @@ const Post = () => {
       navigate(-1);
     }
   };
+  const delPost = useTokenAxios(deletePost);
 
   useEffect(() => {
-    Common.handleTokenAxios(fetchPostCounter);
-    Common.handleTokenAxios(fetchUserDetail);
+    getPostCounter();
+    getUserDetail();
   }, []);
 
   return (
@@ -162,7 +166,7 @@ const Post = () => {
           children={modalMsg}
           type={modalType}
           confirm={() => {
-            Common.handleTokenAxios(deletePost);
+            delPost();
           }}
         />
       </PostComp>

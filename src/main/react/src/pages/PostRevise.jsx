@@ -6,11 +6,17 @@ import face from "../images/faceIcon/faceIcon7.png";
 import { NewPostComp, RadioBox } from "../component/NewPost/NewPostStyle";
 import basicImg from "../images/congrats.png";
 import MemberApi from "../api/MemberApi";
-import Common from "../util/Common";
 import BoardApi from "../api/BoardApi";
 import Modal from "../util/Modal";
+import useTokenAxios from "../hooks/useTokenAxios";
 
 const PostRevise = () => {
+  // 게시판 리스트로 이동
+  const navigate = useNavigate();
+  const toGatherList = () => {
+    navigate("/board/gather");
+  };
+
   const [boardData, setBoardData] = useState("");
   const { postId } = useParams();
   const [memberInfo, setMemberInfo] = useState(null);
@@ -20,6 +26,31 @@ const PostRevise = () => {
     const res = await MemberApi.getMemberDetail();
     if (res.data !== null) setMemberInfo(res.data);
   };
+  const getMemberDetail = useTokenAxios(fetchMemberDetail);
+
+  const fetchBoardData = async () => {
+    console.log("API 요청 전");
+    const res = await BoardApi.boardDetail(postId);
+    console.log("API 요청 후 : ", res);
+    if (res.data !== null) {
+      setBoardData(res.data);
+      // 여기에 set 쌓아요
+      setSelCategory(res.data.categoryName);
+      setSelGather(res.data.gatherType);
+      setInputTitle(res.data.title);
+      setInputContents(res.data.boardContent);
+      setImgSrc(res.data.image);
+
+      const toDate = new Date(res.data.regDate);
+      setRegDate(toDate.toISOString().split("T")[0]);
+    }
+  };
+  const getBoardData = useTokenAxios(fetchBoardData);
+
+  useEffect(() => {
+    getMemberDetail(); // 멤버 정보 가져옴
+    getBoardData(); // 게시글 정보 가져옴
+  }, []);
 
   // 카테고리 및 모임형식 관련
   const [selCategory, setSelCategory] = useState("");
@@ -43,31 +74,20 @@ const PostRevise = () => {
 
   useEffect(() => {
     //선택에 따라 값 변경 확인하는 콘솔
-    console.log("Category : " + selCategory);
-    console.log("Gather : " + selGather);
+    // console.log("Category : " + selCategory);
+    // console.log("Gather : " + selGather);
     // 카테고리가 무비추천이면 장소 선택을 초기화
     if (selCategory === "무비추천") setSelGather("");
   }, [selCategory, selGather]);
 
-  useEffect(() => {
-    console.log("title : " + inputTitle);
-    console.log("contents : " + inputContents);
-  }, [inputTitle, inputContents]);
-
-  useEffect(() => {
-    Common.handleTokenAxios(fetchMemberDetail); // 멤버 정보 가져옴
-  }, []);
-
-  // 게시판 리스트로 이동
-  const navigate = useNavigate();
-  const toGatherList = () => {
-    navigate("/board/gather");
-  };
+  // useEffect(() => {
+  //   console.log("title : " + inputTitle);
+  //   console.log("contents : " + inputContents);
+  // }, [inputTitle, inputContents]);
 
   // 이미지 업로드
   const [imgSrc, setImgSrc] = useState(basicImg);
   const [file, setFile] = useState("");
-  const [url, setUrl] = useState("");
 
   // 입력받은 이미지 파일 주소
   const handleFileInputChange = (e) => {
@@ -82,27 +102,6 @@ const PostRevise = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchBoardData = async () => {
-      console.log("API 요청 전");
-      const res = await BoardApi.boardDetail(postId);
-      console.log("API 요청 후 : ", res);
-      if (res.data !== null) {
-        setBoardData(res.data);
-        // 여기에 set 쌓아요
-        setSelCategory(res.data.categoryName);
-        setSelGather(res.data.gatherType);
-        setInputTitle(res.data.title);
-        setInputContents(res.data.boardContent);
-        setImgSrc(res.data.image);
-
-        const toDate = new Date(res.data.regDate);
-        setRegDate(toDate.toISOString().split("T")[0]);
-      }
-    };
-    Common.handleTokenAxios(fetchBoardData);
-  }, []);
-
   // 모달
   const [openModal, setModalOpen] = useState(false);
   const closeModal = () => {
@@ -112,7 +111,6 @@ const PostRevise = () => {
   const [modalMsg, setModalMsg] = useState("");
   const [modalHeader, setModalHeader] = useState("");
   const [modalType, setModalType] = useState(null);
-  const [modalConfirm, setModalConfirm] = useState(null);
 
   const handleModal = (header, msg, type) => {
     setModalOpen(true);
@@ -120,7 +118,8 @@ const PostRevise = () => {
     setModalMsg(msg);
     setModalType(type);
   };
-  // 이 위치에 수정하는 api로 바꾸세요
+
+  // 게시글 수정
   const updatePost = async (url) => {
     const res = await BoardApi.updateBoard(
       boardData.id,
@@ -144,15 +143,15 @@ const PostRevise = () => {
         console.log("저장성공!");
         fileRef.getDownloadURL().then((url) => {
           console.log("저장경로 확인 : " + url);
-          setUrl(url);
           console.log("url" + url);
-          Common.handleTokenAxios(() => updatePost(url));
+          updatePost(url);
         });
       });
     } else {
-      Common.handleTokenAxios(updatePost);
+      updatePost();
     }
   };
+  const clickSave = useTokenAxios(onSubmit);
 
   return (
     <>
@@ -289,7 +288,7 @@ const PostRevise = () => {
                 children="수정하기"
                 active={true}
                 back="var(--BLUE)"
-                clickEvt={onSubmit}
+                clickEvt={clickSave}
               />
               <Button
                 children="목록보기"

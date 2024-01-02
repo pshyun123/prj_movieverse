@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Common from "../../../util/Common";
 
 const ModalStyle = styled.div`
   .modal {
@@ -125,7 +124,7 @@ const EditModal = (props) => {
               {type && (
                 <Button
                   onClick={() => {
-                    Common.tokenHeader(confirm());
+                    confirm();
                   }}
                 >
                   확인

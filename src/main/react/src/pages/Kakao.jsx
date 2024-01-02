@@ -55,10 +55,10 @@ const Kakao = () => {
     console.log("카카오 로그인!");
     try {
       const res = await MemberApi.login(email, password);
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.grantType === "Bearer") {
-        console.log("KL accessToken : " + res.data.accessToken);
-        console.log("KL refreshToken : " + res.data.refreshToken);
+        // console.log("KL accessToken : " + res.data.accessToken);
+        // console.log("KL refreshToken : " + res.data.refreshToken);
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);
         setLoginStatus(true);
@@ -73,12 +73,12 @@ const Kakao = () => {
     kakaoToken();
   }, []);
   // 카카오 정보 확인
-  useEffect(() => {
-    console.log("isMember : " + isMember);
-    console.log("email : " + email);
-    console.log("profile : " + profile);
-    console.log("id : " + kakaoId);
-  }, [isMember, email, profile, kakaoId]);
+  // useEffect(() => {
+  //   console.log("isMember : " + isMember);
+  //   console.log("email : " + email);
+  //   console.log("profile : " + profile);
+  //   console.log("id : " + kakaoId);
+  // }, [isMember, email, profile, kakaoId]);
 
   //Modal
   const [openModal, setModalOpen] = useState(false);
