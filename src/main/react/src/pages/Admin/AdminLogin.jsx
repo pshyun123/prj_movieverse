@@ -65,7 +65,7 @@ const AdminLoginComp = styled.section`
 const AdminLogin = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { setLoginStatus, loginStatus } = context;
+  const { setLoginStatus } = context;
 
   //키보드 입력
   const [inputId, setInputId] = useState("");
@@ -79,8 +79,8 @@ const AdminLogin = () => {
   };
 
   useEffect(() => {
-    console.log("id:" + inputId);
-    console.log("pw:" + inputPw);
+    // console.log("id:" + inputId);
+    // console.log("pw:" + inputPw);
 
     // 이메일 + 비밀번호 입력시 로그인 버튼 활성화
     if (inputId.length > 0 && inputPw.length > 0) setIsActive(true);
@@ -94,8 +94,8 @@ const AdminLogin = () => {
     try {
       const res = await MemberApi.adminLogin(inputId, inputPw);
       if (res.data !== null) {
-        console.log("ADaccessToken : " + res.data.accessToken);
-        console.log("ADrefreshToken : " + res.data.refreshToken);
+        // console.log("ADaccessToken : " + res.data.accessToken);
+        // console.log("ADrefreshToken : " + res.data.refreshToken);
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);
         setLoginStatus("ADMIN");

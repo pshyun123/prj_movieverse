@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import Button from "../../../util/Button";
 import FaqApi from "../../../api/FaqApi";
-import Common from "../../../util/Common";
+import useTokenAxios from "../../../hooks/useTokenAxios";
 
 const EditFaqModalComp = styled.div`
   .modal {
@@ -120,6 +120,7 @@ const EditFaqModal = (props) => {
       bringData();
     }
   };
+  const addFaq = useTokenAxios(newFaq);
 
   const reviseFaq = async () => {
     console.log("수정 시도");
@@ -130,15 +131,7 @@ const EditFaqModal = (props) => {
       bringData();
     }
   };
-
-  const addFaq = () => {
-    console.log("faq추가!이건테스트입니다");
-    Common.handleTokenAxios(newFaq);
-  };
-  const editFaq = () => {
-    console.log("faq수정~이건테스트!");
-    Common.handleTokenAxios(reviseFaq);
-  };
+  const editFaq = useTokenAxios(reviseFaq);
 
   return (
     <EditFaqModalComp>

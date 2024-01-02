@@ -38,7 +38,6 @@ const MemTrComp = styled.tr`
 `;
 
 const MemTr = ({ data, index, setId, deleteModal }) => {
-  console.log(data);
   const toDate = new Date(data.regDate);
   const regDate = toDate.toISOString().split("T")[0];
 

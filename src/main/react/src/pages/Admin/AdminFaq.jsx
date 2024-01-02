@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import FaqTr from "../../component/Administor/AdmimFaq/FaqElement";
 import Modal from "../../util/Modal";
 import FaqApi from "../../api/FaqApi";
-import Common from "../../util/Common";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const AdminFaqComp = styled.div`
   padding-top: 8%;
@@ -99,9 +99,7 @@ const AdminFaq = () => {
     }
   };
 
-  const bringData = () => {
-    Common.handleTokenAxios(fetchFaqList);
-  };
+  const bringData = useTokenAxios(fetchFaqList);
 
   useEffect(() => {
     console.log("titleVal : " + titleVal);
@@ -124,12 +122,11 @@ const AdminFaq = () => {
   const closeModal = (num) => {
     setModalOpen(false);
   };
-  const handleModal = (header, msg, type, num) => {
+  const handleModal = (header, msg, type) => {
     setModalOpen(true);
     setModalHeader(header);
     setModalMsg(msg);
     setModalType(type);
-    // setModalConfirm(num);
   };
 
   const deleteFaq = async () => {
@@ -140,14 +137,11 @@ const AdminFaq = () => {
       bringData();
     }
   };
-  const delFaq = () => {
-    console.log("faq삭제!!!테스트입니다!");
-    Common.handleTokenAxios(deleteFaq);
-  };
+  const delFaq = useTokenAxios(deleteFaq);
 
-  useEffect(() => {
-    console.log("ididi: " + editId);
-  }, [editId]);
+  // useEffect(() => {
+  //   console.log("ididi: " + editId);
+  // }, [editId]);
 
   return (
     <>

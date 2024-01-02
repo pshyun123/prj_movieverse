@@ -22,7 +22,7 @@ const AdminLayout = () => {
   useEffect(() => {
     if (loginStatus !== "ADMIN") {
       //로그인 하지 않았다면 로그인 페이지로 이동
-      navigate("/login/admin");
+      navigate("/logina");
     }
   }, []); // []<-화면 마운트시 최초 한번 실행
 

@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import MemoizedTr from "../../component/Administor/AdminBoard/TableElement";
 import PaginationUtil from "../../util/Pagination/Pagination";
 import BoardApi from "../../api/BoardApi";
-import Common from "../../util/Common";
 import Modal from "../../util/Modal";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const AdminBoardComp = styled.div`
   padding-top: 8%;
@@ -58,24 +58,6 @@ const AdminBoard = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(5);
 
-  useEffect(() => {
-    //클릭된 페이지의 게시글 가져오기
-    Common.handleTokenAxios(() => fetchDataList(page));
-  }, [page]);
-  useEffect(() => {
-    // 총페이지 수 가져오는 APi
-    Common.handleTokenAxios(fetchTotalPage);
-  }, []);
-
-  // 페이지 api 정의
-  const fetchTotalPage = async () => {
-    setPage(1);
-    const res = await BoardApi.getAdminPages();
-    if (res.data !== null) {
-      setTotalPage(res.data);
-      Common.handleTokenAxios(fetchDataList(1));
-    }
-  };
   // 게시글 api 정의
   const fetchDataList = async (page) => {
     const res = await BoardApi.getAdminBoardList(page);
@@ -83,6 +65,27 @@ const AdminBoard = () => {
       setDataLIst(res.data);
     }
   };
+  const getDataList = useTokenAxios(() => fetchDataList(page));
+
+  // 페이지 api 정의
+  const fetchTotalPage = async () => {
+    setPage(1);
+    const res = await BoardApi.getAdminPages();
+    if (res.data !== null) {
+      setTotalPage(res.data);
+      getDataList();
+    }
+  };
+  const getTotalPage = useTokenAxios(fetchTotalPage);
+
+  useEffect(() => {
+    //클릭된 페이지의 게시글 가져오기
+    getDataList();
+  }, [page]);
+  useEffect(() => {
+    // 총페이지 수 가져오는 APi
+    getTotalPage();
+  }, []);
 
   // 모달
   const [openModal, setModalOpen] = useState(false);
@@ -92,7 +95,7 @@ const AdminBoard = () => {
   const [confirm, setConfirm] = useState(null);
 
   // 모달 닫기
-  const closeModal = (num) => {
+  const closeModal = () => {
     setModalOpen(false);
     setRevise("back");
   };
@@ -138,17 +141,19 @@ const AdminBoard = () => {
   const moveBoard = async () => {
     const res = await BoardApi.updateBoard(editId, editCategory, editType);
     if (res.data) {
-      Common.handleTokenAxios(fetchTotalPage);
+      getTotalPage();
     }
   };
+  const changeCategory = useTokenAxios(moveBoard);
 
   // 게시글 삭제
   const deleteBoard = async () => {
     const res = await BoardApi.deleteBoard(editId);
     if (res.data) {
-      Common.handleTokenAxios(fetchTotalPage);
+      getTotalPage();
     }
   };
+  const delBoard = useTokenAxios(deleteBoard);
 
   return (
     <AdminBoardComp>
@@ -203,12 +208,12 @@ const AdminBoard = () => {
         type={modalType}
         confirm={() => {
           if (confirm === 0) {
-            Common.handleTokenAxios(moveBoard);
+            changeCategory();
             setModalOpen(false);
             setRevise(true);
           } else if (confirm === 1) {
             closeModal();
-            Common.handleTokenAxios(deleteBoard);
+            delBoard();
           }
         }}
       />

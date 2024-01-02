@@ -60,11 +60,11 @@ const Tr = ({ data, index, revise, setRevise, clickOk, clickDel, editId }) => {
   const toDate = new Date(data.regDate);
   const regDate = toDate.toISOString().split("T")[0];
 
-  console.log("TR" + data.id + "업데이트 되는 중");
+  // console.log("TR" + data.id + "업데이트 되는 중");
 
-  useEffect(() => {
-    console.log("TR" + data.id + "마운트 되는 중");
-  }, []);
+  // useEffect(() => {
+  //   console.log("TR" + data.id + "마운트 되는 중");
+  // }, []);
 
   // 첫 렌더링(마운트) 상태 여부
   const isInitialRender = useRef(true);
@@ -74,7 +74,7 @@ const Tr = ({ data, index, revise, setRevise, clickOk, clickDel, editId }) => {
       if (categorySel === "무비추천") {
         setTypeSel("sel");
         setGatherActive(true);
-        console.log("TR" + data.id + "카테고리 무비추천");
+        // console.log("TR" + data.id + "카테고리 무비추천");
       }
     } else {
       isInitialRender.current = false;
@@ -83,7 +83,7 @@ const Tr = ({ data, index, revise, setRevise, clickOk, clickDel, editId }) => {
 
   useEffect(() => {
     if (revise === true || revise === "back") {
-      console.log("TR" + data.id + "revise 영향");
+      // console.log("TR" + data.id + "revise 영향");
       setConfirmRevise(false);
       setRevise(false);
       setCategoryActive(true);
