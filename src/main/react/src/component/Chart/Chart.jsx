@@ -65,7 +65,7 @@ export default function Chart() {
         return monthA - monthB;
       });
 
-      setMonthlyUserData(sortedMonthlyUserData);
+      setMonthlyUserData(res.data);
     }
   };
   const getMonthlyUserData = useTokenAxios(fetchMonthlyUserData);
