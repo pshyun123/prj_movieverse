@@ -3,9 +3,9 @@ import Chart from "../../component/Chart/Chart";
 import MemTr from "../../component/Administor/AdminBoard/MemTableElement";
 import MemberApi from "../../api/MemberApi";
 import { useEffect, useState } from "react";
-import Common from "../../util/Common";
 import Modal from "../../util/Modal";
 import PaginationUtil from "../../util/Pagination/Pagination";
+import useTokenAxios from "../../hooks/useTokenAxios";
 
 const AdminMemberComp = styled.div`
   padding-top: 10%;
@@ -74,22 +74,6 @@ const AdminMember = () => {
   const [memData, setMemData] = useState([]);
   const [editId, setEditId] = useState("");
 
-  useEffect(() => {
-    Common.handleTokenAxios(() => adminMemList(page));
-  }, [page]);
-
-  useEffect(() => {
-    Common.handleTokenAxios(fetchPageList);
-  }, []);
-
-  const fetchPageList = async () => {
-    const res = await MemberApi.getTotalPage();
-    if (res.data !== null) {
-      setTotalPage(res.data);
-      Common.handleTokenAxios(() => adminMemList(0));
-    }
-  };
-
   // 멤버정보 불러오기
   const adminMemList = async (page) => {
     const rsp = await MemberApi.memberPage(page);
@@ -97,6 +81,25 @@ const AdminMember = () => {
       setMemData(rsp.data);
     }
   };
+  const getAdminMemList = useTokenAxios(() => adminMemList(page));
+  const getFirstPage = useTokenAxios(() => adminMemList(0));
+
+  const fetchPageList = async () => {
+    const res = await MemberApi.getTotalPage();
+    if (res.data !== null) {
+      setTotalPage(res.data);
+      getFirstPage();
+    }
+  };
+  const getTotalPage = useTokenAxios(fetchPageList);
+
+  useEffect(() => {
+    getAdminMemList();
+  }, [page]);
+
+  useEffect(() => {
+    getTotalPage();
+  }, []);
 
   // 삭제 모달
   const [openModal, setModalOpen] = useState(false);
@@ -105,25 +108,25 @@ const AdminMember = () => {
   const [modalType, setModalType] = useState(null);
 
   // 모달 닫기
-  const closeModal = (num) => {
+  const closeModal = () => {
     setModalOpen(false);
   };
-  const handleModal = (header, msg, type, num) => {
+  const handleModal = (header, msg, type) => {
     setModalOpen(true);
     setModalHeader(header);
     setModalMsg(msg);
     setModalType(type);
-    // setModalConfirm(num);
   };
 
   const deleteMem = async () => {
     const res = await MemberApi.deleteMem(editId);
     if (res.data) {
-      console.log("회원 삭제 성공");
+      // console.log("회원 삭제 성공");
       closeModal();
-      Common.handleTokenAxios(() => adminMemList(0)); // 멤버 삭제하고 나면 멤버리스트 다시 불러줘!(리스트 부를 때 토큰 필요)
+      getFirstPage(); // 멤버 삭제하고 나면 멤버리스트 다시 불러줘!(리스트 부를 때 토큰 필요)
     }
   };
+  const memDelete = useTokenAxios(deleteMem);
 
   return (
     <>
@@ -179,7 +182,7 @@ const AdminMember = () => {
           children={modalMsg}
           type={modalType}
           confirm={() => {
-            Common.handleTokenAxios(deleteMem);
+            memDelete();
           }}
         />
       </AdminMemberComp>
