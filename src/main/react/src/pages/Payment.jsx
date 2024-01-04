@@ -202,7 +202,6 @@ const Payment = () => {
               <Button
                 children="결제하기"
                 active={true}
-                width="350px"
                 clickEvt={onClickPayment}
               />
               <p>VAT포함</p>
