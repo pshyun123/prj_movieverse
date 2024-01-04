@@ -96,9 +96,9 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
                 className="editBtn"
                 children="수정"
                 active={true}
-                width="70px"
+                width="44%"
                 height="30px"
-                fontSize="14px"
+                fontSize="1em"
                 front="var(--BLUE)"
                 clickEvt={editModalOpen}
               />
@@ -106,9 +106,9 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
                 className="deleteBtn"
                 children="삭제"
                 active={true}
-                width="70px"
+                width="44%"
                 height="30px"
-                fontSize="14px"
+                fontSize="1em"
                 front="var(--GREY)"
                 clickEvt={() => {
                   handleModal("삭제", "삭제하시겠습니까 ?", true);

@@ -134,6 +134,7 @@ const Post = () => {
                   front="var(--BLUE)"
                   active={true}
                   clickEvt={() => onClickBoard(1)}
+                  width="100%"
                 />
                 <Button
                   children="삭제하기"
@@ -142,6 +143,7 @@ const Post = () => {
                   clickEvt={() => {
                     handleModal("삭제", "삭제하시겠습니까?", true);
                   }}
+                  width="100%"
                 />
               </div>
             )}

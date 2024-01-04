@@ -259,6 +259,25 @@ export const NewPostComp = styled.section`
       }
     }
   }
+  @media only screen and (max-width: 480px) {
+    .container {
+      .bubbleArea {
+        .bubbleText {
+          h2 {
+            font-size: 1.3em;
+          }
+          p {
+            font-size: 1em;
+            line-height: 1.4;
+          }
+        }
+      }
+    }
+    .postBox {
+      .selectBoard {
+      }
+    }
+  }
 `;
 // 라디오 버튼 스타일 ////////////////////////
 export const RadioBox = styled.div`
@@ -267,6 +286,7 @@ export const RadioBox = styled.div`
   .boardSelectBtn {
     display: flex;
     width: 100%;
+    outline: 1px solid red;
     .boardLable1 {
       background-color: var(--LIGHTVIO);
     }
@@ -284,6 +304,8 @@ export const RadioBox = styled.div`
       font-weight: 600;
       color: white;
       display: flex;
+      justify-content: center;
+      align-items: center;
       word-break: keep-all;
       margin-right: 20px;
       accent-color: var(--LIGHTVIO);
@@ -314,6 +336,8 @@ export const RadioBox = styled.div`
       display: flex;
       word-break: keep-all;
       margin-right: 20px;
+      justify-content: center;
+      align-items: center;
       accent-color: var(--LIGHTVIO);
 
       /* 체크박스를 라벨 내에 위치 */
@@ -330,6 +354,21 @@ export const RadioBox = styled.div`
     }
     .placeSelectBtn {
       label {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .boardSelectBtn {
+      label {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        margin-right: 5px;
+      }
+    }
+    .placeSelectBtn {
+      label {
+        padding: 8px 12px;
         font-size: 0.8rem;
       }
     }

@@ -119,6 +119,8 @@ export const PostComp = styled.section`
       }
       .buttonBox {
         display: flex;
+        outline: 1px solid red;
+        width: 60%;
         button {
           &:first-child {
             margin-right: 20px;
@@ -189,12 +191,9 @@ export const PostComp = styled.section`
               text-align: right;
             }
             .editBtnBox {
-              /* outline: 1px solid red; */
+              outline: 1px solid red;
               display: flex;
-              justify-content: end;
-              Button {
-                margin-left: 10px;
-              }
+              justify-content: space-between;
             }
           }
         }
@@ -298,15 +297,9 @@ export const PostComp = styled.section`
               }
             }
             .rightArea {
-              width: 30%;
+              width: 40%;
               .writeDate {
                 margin-bottom: 10px;
-              }
-              .editBtnBox {
-                Button {
-                  font-size: 0.8rem;
-                  margin-left: 10px;
-                }
               }
             }
           }
@@ -317,6 +310,47 @@ export const PostComp = styled.section`
       }
       .listBtnBox {
         margin-top: 30px;
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .container {
+      .titleBox {
+        padding-bottom: 30px;
+        .memIconArea {
+          width: 100%;
+          .imgBox {
+            width: 90%;
+            padding-bottom: 90%;
+          }
+        }
+        p {
+          color: black;
+          font-size: 0.7rem;
+        }
+        .titleElements {
+          width: 80%;
+          margin-left: 0;
+          .topElements {
+            .selectedBox {
+              width: 54%;
+              .boardType,
+              .placeType {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                p {
+                  font-size: 0.8em;
+                  color: white;
+                }
+              }
+            }
+          }
+
+          h3 {
+            font-size: 1.1rem;
+          }
+        }
       }
     }
   }

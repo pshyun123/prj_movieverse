@@ -33,6 +33,10 @@ const InfoChgComp = styled.section`
           width: 30%;
           padding-bottom: 30%;
         }
+        @media only screen and (max-width: 480px) {
+          width: 50%;
+          padding-bottom: 50%;
+        }
       }
       label {
         padding: 10px 20px;
