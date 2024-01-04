@@ -9,22 +9,18 @@ import useTokenAxios from "../../hooks/useTokenAxios";
 
 const KikiListComp = styled.section`
   width: 100%;
-  /* outline: 1px solid red; */
   .buttonBox {
     width: 80%;
     margin: 0 auto;
     display: flex;
     justify-content: end;
     margin-bottom: 50px;
-    /* outline: 1px solid yellow; */
   }
   .container {
     padding: 100px 0;
-    /* outline: 1px solid red; */
     .chatListBox {
       width: 80%;
       margin: 0 auto;
-      /* outline: 1px solid blue; */
 
       .chatBox {
         width: 100%;
@@ -43,7 +39,6 @@ const KikiListComp = styled.section`
             color: white;
           }
         }
-        /* outline: 1px solid red; */
         .title {
           color: #000;
           font-weight: 600;
@@ -62,6 +57,11 @@ const KikiListComp = styled.section`
         p {
           font-size: 1.6em;
           line-height: 2.3;
+        }
+        @media only screen and (max-width: 480px) {
+          p {
+            font-size: 1.2em;
+          }
         }
       }
     }

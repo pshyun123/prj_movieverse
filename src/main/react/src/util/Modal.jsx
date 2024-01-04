@@ -33,6 +33,7 @@ const ModalStyle = styled.div`
       padding: 16px 64px 16px 16px;
       background-color: var(--VIOLET);
       font-weight: 600;
+      text-align: left;
       button {
         position: absolute;
         top: 15px;

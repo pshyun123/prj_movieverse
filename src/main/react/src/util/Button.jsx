@@ -6,7 +6,7 @@ const ButtonComp = styled.button`
   height: ${(props) => props.height || "40px"};
   color: ${(props) => props.color || "white"};
   font-weight: 600;
-  font-size: ${(props) => props.fontSize || "16px"};
+  font-size: ${(props) => props.fontSize || "1em"};
   border: none;
   border-radius: 5px;
   background-color: ${(props) => props.$front || "var(--LIGHTVIO)"};

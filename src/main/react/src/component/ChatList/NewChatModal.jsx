@@ -116,18 +116,18 @@ const NewChatModal = (props) => {
                 clickEvt={confirm}
                 active={active}
                 width="20%"
+                fontSize=".8em"
                 back={"var(--BLUE)"}
-              >
-                만들기
-              </Button>
+                children={"만들기"}
+              />
               <Button
                 clickEvt={close}
                 active={true}
                 width="20%"
+                fontSize=".8em"
                 back={"var(--BLUE)"}
-              >
-                취소하기
-              </Button>
+                children={"취소하기"}
+              />
             </div>
           </section>
         )}

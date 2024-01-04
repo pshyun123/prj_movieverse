@@ -16,14 +16,18 @@ const BoardCardComp = styled.div`
   @media only screen and (max-width: 768px) {
     height: 200px;
   }
+  @media only screen and (max-width: 480px) {
+    padding: 10px;
+  }
   .textBox {
     width: 56%;
     position: relative;
     .categoryGatherBox {
       display: flex;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       justify-content: space-between;
       align-items: baseline;
+      position: relative;
       .categoryGather {
         p {
           color: white;
@@ -45,21 +49,33 @@ const BoardCardComp = styled.div`
       }
       .regdate {
         color: #333;
+        @media only screen and (max-width: 480px) {
+          position: absolute;
+          width: 100%;
+          text-align: right;
+          bottom: -10px;
+          right: 0;
+        }
       }
     }
     .contentBox {
       margin-bottom: 15px;
       h3 {
         color: black;
-        padding-bottom: 15px;
+        margin-bottom: 15px;
         font-weight: 600;
+        @media only screen and (max-width: 480px) {
+          /* font-size: 1.2em; */
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
       }
       .content {
         color: black;
         line-height: 1.5;
         word-break: break-all;
         text-overflow: ellipsis;
-        overflow: hidden;
         text-align: left;
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -67,6 +83,8 @@ const BoardCardComp = styled.div`
         -webkit-line-clamp: 5;
         @media only screen and (max-width: 768px) {
           -webkit-line-clamp: 3;
+        }
+        @media only screen and (max-width: 480px) {
         }
       }
     }

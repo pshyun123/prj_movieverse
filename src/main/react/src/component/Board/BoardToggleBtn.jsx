@@ -28,6 +28,9 @@ const BtnText = styled.div`
   font-size: 15px;
   font-weight: bold;
   transition: all 0.5s ease;
+  @media only screen and (max-width: 480px) {
+    font-size: 0.8em;
+  }
 `;
 
 const Circle = styled.div`

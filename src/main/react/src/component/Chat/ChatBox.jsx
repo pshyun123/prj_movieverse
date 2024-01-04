@@ -52,9 +52,12 @@ const ChatBoxComp = styled.section`
         .sendBox {
           display: flex;
           justify-content: end;
-          Button {
-          }
         }
+      }
+    }
+    @media only screen and (max-width: 480px) {
+      .chatBg {
+        width: 100%;
       }
     }
   }

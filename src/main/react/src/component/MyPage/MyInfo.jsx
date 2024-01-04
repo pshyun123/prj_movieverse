@@ -4,9 +4,13 @@ import profileimg from "../../images/faceIcon/faceIcon1.png";
 import Button from "../../util/Button";
 
 const MyInfoComp = styled.section`
-  width: 100%; /* 보통 높이값은 따로 주지 않는다(배너를 잡을 경우에는 높이값을 준다) */
+  width: 100%; /* 보통 높이값은 따로 주지 않음!(배너를 잡을 경우에는 높이값을 줌) */
   padding-top: 80px;
+  /* outline: 1px solid yellow; */
   margin-bottom: 100px;
+  @media only screen and (max-width: 480px) {
+    margin-bottom: 0;
+  }
 
   .container {
     h2 {
@@ -15,6 +19,7 @@ const MyInfoComp = styled.section`
       font-size: 3rem;
     }
     .wrapper {
+      /* outline: 1px solid yellow; */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,6 +27,7 @@ const MyInfoComp = styled.section`
         width: 250px;
         margin-right: 5%;
         padding-bottom: 5%;
+        /* outline: 1px solid red; */
         .profileImg {
           width: 250px;
           padding-bottom: 250px;
@@ -40,6 +46,7 @@ const MyInfoComp = styled.section`
       .userContent {
         width: 50%;
         letter-spacing: -0.8px;
+        /* outline: 1px solid pink; */
         .userBox {
           margin-bottom: 20px;
           display: grid;
@@ -67,6 +74,7 @@ const MyInfoComp = styled.section`
       }
     }
     .buttonBox {
+      /* outline: 1px solid blue; */
       display: flex;
       justify-content: end;
       padding-right: 10%;
@@ -97,7 +105,6 @@ const MyInfoComp = styled.section`
 
         .userContent {
           width: 100%; /* 모바일에서 전체 너비로 */
-          padding: 0 50px;
           justify-content: center;
           /* align-items: center; */
           text-align: center;
@@ -105,6 +112,18 @@ const MyInfoComp = styled.section`
             padding-right: 0; /* 모바일에서 오른쪽 패딩 제거 */
             justify-content: center; /* 가운데 정렬 */
             margin-top: 70px;
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 480px) {
+      .wrapper {
+        .userContent {
+          padding: 0 10px;
+          .userBox {
+            p {
+              font-size: 1.2em;
+            }
           }
         }
       }
@@ -170,7 +189,7 @@ const MyInfo = ({ memberInfo }) => {
                   active={true}
                   height="45px"
                   width="120px"
-                  fontSize="16px"
+                  fontSize="1em"
                   clickEvt={toinfochange}
                 />
                 <Button
@@ -178,7 +197,7 @@ const MyInfo = ({ memberInfo }) => {
                   active={true}
                   height="45px"
                   width="120px"
-                  fontSize="16px"
+                  fontSize="1em"
                   clickEvt={tomemberpost}
                 />
               </div>
