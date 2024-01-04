@@ -18,6 +18,9 @@ export const ButtonStyle = styled.button`
   &:hover {
     color: var(--LIGHTVIO);
   }
+  @media only screen and (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 export const PageWrapper = styled.div``;
 
@@ -29,7 +32,9 @@ export const PageButton = styled.button`
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
-
+  @media only screen and (max-width: 480px) {
+    font-size: 1rem;
+  }
   ${({ $isActive }) =>
     $isActive &&
     `
