@@ -71,11 +71,38 @@ const PayComp = styled.section`
       }
     }
     .buttonBox {
-      width: 350px;
+      width: 250px;
       p {
         padding-top: 3%;
         text-align: right;
         font-size: 0.9rem;
+      }
+    }
+    @media only screen and (max-width: 480px) {
+      .paymentBox {
+        width: 80%;
+        .textBox {
+          h2 {
+            font-size: 1.2rem;
+          }
+          p {
+            font-size: 0.9rem;
+            span {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+      .faceIcon {
+        width: 180px;
+      }
+    }
+    .buttonBox {
+      width: 200px;
+      p {
+        padding-top: 3%;
+        text-align: right;
+        font-size: 0.8rem;
       }
     }
   }

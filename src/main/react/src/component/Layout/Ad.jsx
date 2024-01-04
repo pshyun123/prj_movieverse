@@ -46,6 +46,12 @@ const AdComp = styled.div`
         font-size: 0.9rem;
       }
     }
+    @media only screen and (max-width: 480px) {
+      p {
+        font-size: 0.7rem;
+        padding-bottom: 3px;
+      }
+    }
   }
   .imgWrap {
     width: 16%;

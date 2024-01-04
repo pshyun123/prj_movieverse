@@ -72,15 +72,41 @@ const PayRstComp = styled.section`
       .paymentBox {
         .textBox {
           .titleBox {
+            .congrats {
+              width: 40px;
+            }
+            .congrats2 {
+              width: 40px;
+            }
             h2 {
               font-size: 1.8rem;
+              margin: 0 10px;
             }
           }
           h3 {
             font-size: 1.4rem;
+            margin-bottom: 20px;
           }
           p {
-            font-size: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 7px;
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 480px) {
+      .paymentBox {
+        .textBox {
+          .titleBox {
+            h2 {
+              font-size: 1.6rem;
+            }
+          }
+          h3 {
+            font-size: 1.2rem;
+          }
+          p {
+            font-size: 0.9rem;
           }
         }
       }
