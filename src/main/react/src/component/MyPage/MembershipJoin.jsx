@@ -12,8 +12,6 @@ const MembershipJoinComp = styled.section`
     position: relative;
     display: flex;
     justify-content: center;
-
-    outline: 1px solid red;
   }
   .adWrap {
     padding: 10%;
