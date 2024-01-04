@@ -96,7 +96,7 @@ const BoardCard = React.memo(
     const navigate = useNavigate();
     const toDate = new Date(board.regDate);
     const regDate = toDate.toISOString().split("T")[0];
-    console.log("렌더링 보드 : " + board.id);
+    // console.log("렌더링 보드 : " + board.id);
 
     return (
       <>

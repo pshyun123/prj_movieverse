@@ -8,6 +8,8 @@ import "swiper/css/bundle";
 import styled from "styled-components";
 import MovieCard from "../MovieSearch/MovieCard";
 import OttBoxApi from "../../api/OttBoxApi";
+import Modal from "../../util/Modal";
+import { useNavigate } from "react-router-dom";
 
 const OttSlideStyle = styled.div`
   width: 100%;
@@ -50,10 +52,28 @@ const OttSlideStyle = styled.div`
 `;
 
 const OttSlide = ({ activeButton }) => {
+  const navigate = useNavigate();
   const [movieData, setMovieData] = useState([]);
 
   const swiperRef = useRef(null);
 
+  //Modal
+  // 여기서부터
+  const [openModal, setModalOpen] = useState(false);
+  const [modalMsg, setModalMsg] = useState("");
+  const [modalHeader, setModalHeader] = useState("");
+  const [modalType, setModalType] = useState(null);
+
+  // 모달 닫기
+  const closeModal = (num) => {
+    setModalOpen(false);
+  };
+  const handleModal = (header, msg, type, num) => {
+    setModalOpen(true);
+    setModalHeader(header);
+    setModalMsg(msg);
+    setModalType(type);
+  };
 
   const fetchMoviesByButton = async () => {
     try {
@@ -127,14 +147,22 @@ const OttSlide = ({ activeButton }) => {
         {movieData &&
           movieData.map((movie) => (
             <SwiperSlide className="slide" key={movie.title}>
-              <MovieCard movie={movie} />
+              <MovieCard movie={movie} handleModal={handleModal} />
             </SwiperSlide>
           ))}
         <div className="swiper-button-prev swiper-button"></div>
         <div className="swiper-button-next swiper-button"></div>
       </Swiper>
-
-
+      <Modal
+        open={openModal}
+        close={closeModal}
+        header={modalHeader}
+        children={modalMsg}
+        type={modalType}
+        confirm={() => {
+          navigate("/login");
+        }}
+      />
     </OttSlideStyle>
   );
 };

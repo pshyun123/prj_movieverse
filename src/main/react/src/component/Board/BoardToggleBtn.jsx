@@ -14,7 +14,6 @@ const ToggleBtn = styled.button`
   .btnBox {
     display: flex;
     justify-content: space-around;
-    outline: 1px solid yellow;
     width: 100%;
   }
   @media only screen and (max-width: 768px) {
