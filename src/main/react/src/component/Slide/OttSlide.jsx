@@ -13,10 +13,11 @@ import { useNavigate } from "react-router-dom";
 
 const OttSlideStyle = styled.div`
   width: 100%;
-  padding-top: 80px;
+
   .ottRank-slider {
     width: 100%;
     position: relative;
+    padding: 50px 0;
 
     .swiper-button {
       color: #494949;
@@ -29,13 +30,12 @@ const OttSlideStyle = styled.div`
       cursor: pointer;
       z-index: 10;
 
-
       &:hover {
         background-color: var(--LIGHTVIO);
       }
 
       &::after {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
         color: var(--DARKBLUE);
       }
@@ -46,6 +46,18 @@ const OttSlideStyle = styled.div`
         &:hover {
           background-color: white;
         }
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .ottRank-slider {
+      width: 100%;
+      position: relative;
+      padding: 50px 0;
+      .swiper-button {
+        padding: 15px 15px;
+        height: 10px;
+        width: 10px;
       }
     }
   }

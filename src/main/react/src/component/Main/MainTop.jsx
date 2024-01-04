@@ -16,7 +16,6 @@ const MainTopComp = styled.section`
     .container {
       padding-top: 130px;
       .elements {
-        /* padding: 30px; */
         .textBox {
           h4 {
             margin-bottom: 8px;
@@ -33,7 +32,9 @@ const MainTopComp = styled.section`
         }
       }
     }
-    @media only screen and (max-width: 768px) {
+  }
+  @media only screen and (max-width: 768px) {
+    .wrapper {
       .container {
         padding-left: 35px;
         .elements {
@@ -47,10 +48,34 @@ const MainTopComp = styled.section`
             }
           }
           Button {
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             font-size: 1.3rem;
             margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    height: 500px;
+    .wrapper {
+      .container {
+        padding-left: 30px;
+        .elements {
+          .textBox {
+            h4 {
+              font-size: 1.1rem;
+            }
+            h2 {
+              font-size: 1.7rem;
+            }
+          }
+          Button {
+            width: 120px;
+            height: 120px;
+            font-size: 1.1rem;
+            margin-right: 15px;
           }
         }
       }

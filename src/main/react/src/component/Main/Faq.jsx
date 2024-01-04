@@ -74,6 +74,26 @@ const FAQComp = styled.section`
       }
     }
   }
+  @media only screen and (max-width: 480px) {
+    .container {
+      .faqHeader {
+        margin-bottom: 40px;
+      }
+      .faqMap {
+        width: 95%;
+        li {
+          font-size: 0.9rem;
+
+          .faqBox {
+            .title {
+              color: white;
+              padding-left: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 const Faq = ({ faqPlus }) => {
   const [icon, setIcon] = useState(faAngleDown);
