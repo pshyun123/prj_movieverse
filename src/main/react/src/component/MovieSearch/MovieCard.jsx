@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import Bookmark from "./Bookmark";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 const MovieCardComp = styled.div`
   position: relative;
@@ -107,6 +106,24 @@ const MovieCardComp = styled.div`
       }
     }
   }
+  @media only screen and (max-width: 480px) {
+    .overlay {
+      .hoverInfo {
+        .title {
+          font-size: 1.1em;
+        }
+        .plotText {
+          font-size: 0.76em;
+          -webkit-line-clamp: 8;
+        }
+        .score {
+          .scoreNum {
+            font-size: 1.6em;
+          }
+        }
+      }
+    }
+  }
 `;
 
 const ImgComp = styled.div`
@@ -126,7 +143,6 @@ const MovieCard = ({
   setHideState,
   hideMovie,
 }) => {
-  // console.log(movie);
   const navigate = useNavigate();
 
   const toMovieDetail = () => {

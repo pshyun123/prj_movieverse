@@ -286,7 +286,7 @@ export const RadioBox = styled.div`
   .boardSelectBtn {
     display: flex;
     width: 100%;
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
     .boardLable1 {
       background-color: var(--LIGHTVIO);
     }

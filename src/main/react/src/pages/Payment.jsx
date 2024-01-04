@@ -98,9 +98,11 @@ const PayComp = styled.section`
       }
     }
     .buttonBox {
-      width: 200px;
+      width: 50%;
+      button {
+        margin-bottom: 5px;
+      }
       p {
-        padding-top: 3%;
         text-align: right;
         font-size: 0.8rem;
       }
@@ -203,6 +205,7 @@ const Payment = () => {
                 children="결제하기"
                 active={true}
                 clickEvt={onClickPayment}
+                width="100%"
               />
               <p>VAT포함</p>
             </div>

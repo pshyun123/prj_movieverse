@@ -13,6 +13,8 @@ const MyInfoComp = styled.section`
   }
 
   .container {
+    outline: 1px solid red;
+    padding-bottom: 80px;
     h2 {
       text-align: center;
       margin-bottom: 50px;
@@ -134,7 +136,6 @@ const MyInfoComp = styled.section`
 const MyInfo = ({ memberInfo }) => {
   const navigate = useNavigate();
 
-  // 해당 버튼 클릭시 어느 페이지로 이동할지 정해준다
   const tomemberpost = () => {
     navigate("/mypage/memberpost");
   };

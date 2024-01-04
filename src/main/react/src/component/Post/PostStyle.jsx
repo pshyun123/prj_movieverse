@@ -119,7 +119,7 @@ export const PostComp = styled.section`
       }
       .buttonBox {
         display: flex;
-        outline: 1px solid red;
+        /* outline: 1px solid red; */
         width: 60%;
         button {
           &:first-child {

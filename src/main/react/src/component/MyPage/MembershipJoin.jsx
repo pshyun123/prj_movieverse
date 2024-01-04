@@ -7,13 +7,13 @@ import face from "../../images/faceIcon/faceIcon3.png";
 const MembershipJoinComp = styled.section`
   width: 100%;
   background-color: var(--BLUE);
-
+  margin-bottom: 80px;
   .container {
     position: relative;
     display: flex;
     justify-content: center;
 
-    /* outline: 1px solid red; */
+    outline: 1px solid red;
   }
   .adWrap {
     padding: 10%;
@@ -40,11 +40,9 @@ const MembershipJoinComp = styled.section`
   }
   @media (max-width: 768px) {
     .container {
-      padding: 10%;
       flex-direction: column;
     }
     .adWrap {
-      flex-direction: column;
       width: 100%;
       padding: 10%;
       padding-top: 10px;
@@ -54,8 +52,21 @@ const MembershipJoinComp = styled.section`
       order: -1;
       justify-content: center;
       align-items: center;
-      p {
-        white-space: nowrap;
+    }
+  }
+  @media (max-width: 480px) {
+    .container {
+      .adWrap {
+        .ad {
+          p {
+            font-size: 1.5em;
+          }
+        }
+      }
+      .imgWrap {
+        img {
+          width: 50%;
+        }
       }
     }
   }

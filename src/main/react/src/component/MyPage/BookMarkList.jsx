@@ -6,7 +6,6 @@ const BookMarkListComp = styled.section`
     h2 {
       font-size: 1.8rem;
       font-weight: 600;
-      padding-top: 100px;
       padding-bottom: 60px;
       /* outline: 1px solid yellow; */
     }
