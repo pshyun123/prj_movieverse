@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Common = {
   MV_DOMAIN: "",
-  MV_SOCKET_URL: "ws://movieverse2024.site/ws/chat",
+  MV_SOCKET_URL: "wss://movieverse2024.site/ws/chat",
 
   // 발행된 토큰을 로컬에 저장
   setAccessToken: (token) => {
