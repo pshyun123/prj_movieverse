@@ -50,6 +50,10 @@ const InfoSection1Style = styled.section`
           font-weight: 600;
           color: var(--LIGHTVIO);
         }
+        .loadInfo {
+          white-space: normal;
+          overflow-wrap: break-word;
+        }
       }
     }
     p {
@@ -72,7 +76,6 @@ const InfoSection1Style = styled.section`
           }
           .loadInfo {
             width: 65%;
-            word-break: keep-all;
           }
         }
       }
@@ -87,7 +90,6 @@ const InfoSection1Style = styled.section`
         .titleInfo {
           .title {
             font-size: 1.1em;
-            word-break: keep-all;
             line-height: 1.4;
           }
           .titleEngInfo {
@@ -101,8 +103,7 @@ const InfoSection1Style = styled.section`
             width: 40%;
           }
           .loadInfo {
-            width: 65%;
-            word-break: keep-all;
+            width: 60%;
           }
         }
       }
@@ -137,6 +138,9 @@ const MovieInfoSection1 = ({ movieDetail, movieId }) => {
         const month = numericDate.slice(4, 6);
         const day = numericDate.slice(6, 8);
         return `${year}.${month}.${day}`;
+      } else if (numericDate && numericDate.length === 4) {
+        const year = numericDate.slice(0, 4);
+        return year;
       } else {
         throw new Error("잘못된 날짜");
       }
@@ -145,7 +149,7 @@ const MovieInfoSection1 = ({ movieDetail, movieId }) => {
         // "잘못된 날짜"가 아닌 경우에만 콘솔에 에러 메시지 출력
         console.error(`날짜 변환 오류: ${error.message}`);
       }
-      return "날짜 변환 오류";
+      return "-";
     }
   };
   return (
@@ -198,7 +202,9 @@ const MovieInfoSection1 = ({ movieDetail, movieId }) => {
               </div>
               <div className="infoBox">
                 <p className="movieInfo">상영시간</p>
-                <p className="loadInfo">{movieDetail.runtime + "분"}</p>
+                <p className="loadInfo">
+                  {movieDetail.runtime ? movieDetail.runtime + "분" : "-"}
+                </p>
               </div>
             </div>
           </div>

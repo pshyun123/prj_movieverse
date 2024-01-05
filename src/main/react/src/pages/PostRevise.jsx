@@ -175,7 +175,7 @@ const PostRevise = () => {
               <RadioBox>
                 {/* name 부분이 같아야 함 */}
                 <div className="boardSelectBtn">
-                  <label className="boardLable1" htmlFor="btn1">
+                  <label className="boardLable1" htmlFor="무비모임">
                     <input
                       type="radio"
                       id="무비모임"
@@ -186,7 +186,7 @@ const PostRevise = () => {
                     />
                     무비모임
                   </label>
-                  <label className="boardLable2" htmlFor="btn2">
+                  <label className="boardLable2" htmlFor="모임후기">
                     <input
                       type="radio"
                       id="모임후기"
@@ -197,7 +197,7 @@ const PostRevise = () => {
                     />
                     모임후기
                   </label>
-                  <label className="boardLable3" htmlFor="btn3">
+                  <label className="boardLable3" htmlFor="무비추천">
                     <input
                       type="radio"
                       id="무비추천"
@@ -215,7 +215,7 @@ const PostRevise = () => {
               <h3>장 소</h3>
               <RadioBox>
                 <div className="placeSelectBtn">
-                  <label className="placeLable1" htmlFor="btn1">
+                  <label className="placeLable1" htmlFor="온라인">
                     <input
                       type="radio"
                       id="온라인"
@@ -227,7 +227,7 @@ const PostRevise = () => {
                     />
                     온라인
                   </label>
-                  <label className="placeLable2" htmlFor="btn2">
+                  <label className="placeLable2" htmlFor="오프라인">
                     <input
                       type="radio"
                       id="오프라인"
