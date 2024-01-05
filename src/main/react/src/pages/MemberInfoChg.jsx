@@ -265,7 +265,7 @@ const MemberInfoChg = () => {
     );
     if (res.data) {
       console.log("회원정보 수정 성공!");
-      handleModal("성공", "정보가 수정되었습니다.", false);
+      handleModal("성공", "정보가 수정되었습니다.", false, 2);
     }
   };
 
@@ -417,7 +417,7 @@ const MemberInfoChg = () => {
           }
         }}
         closeEvt={() => {
-          if (modalConfirm !== 1) {
+          if (modalConfirm === 2) {
             navigate(-1);
           }
         }}
