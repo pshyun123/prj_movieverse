@@ -11,15 +11,15 @@ const InfoSection1Style = styled.section`
   position: relative;
   .container {
     display: flex;
+    justify-content: space-between;
     .moviePoster {
-      margin-right: 40px;
       position: relative;
       width: 28%;
       img {
         width: 100%;
         border-radius: 10px;
         object-fit: cover;
-        height: 91.5%;
+        height: 100%;
       }
       .bookmarkIcon {
         position: absolute;
@@ -28,6 +28,7 @@ const InfoSection1Style = styled.section`
       }
     }
     .movieOtherInfo {
+      width: 68%;
       font-size: 1.4em;
       letter-spacing: -0.8px;
       .titleInfo {
@@ -38,26 +39,28 @@ const InfoSection1Style = styled.section`
       .titleEngInfo {
         .titleEng {
           color: var(--GREY);
-          margin-bottom: 12%;
+          margin-bottom: 30px;
         }
       }
       .infoBox {
         display: flex;
-        margin-bottom: 5%;
+        width: 50%;
+        margin-bottom: 20px;
         .movieInfo {
           margin-right: 10px;
-          width: 23%;
+          width: 40%;
           font-weight: 600;
           color: var(--LIGHTVIO);
         }
         .loadInfo {
+          width: 60%;
           white-space: normal;
           overflow-wrap: break-word;
         }
       }
     }
     p {
-      line-height: 1.5rem;
+      line-height: 1.4;
     }
   }
 
@@ -70,13 +73,9 @@ const InfoSection1Style = styled.section`
         width: 45%;
       }
       .movieOtherInfo {
+        width: 52%;
         .infoBox {
-          .movieInfo {
-            width: 35%;
-          }
-          .loadInfo {
-            width: 65%;
-          }
+          width: 80%;
         }
       }
     }
@@ -84,9 +83,10 @@ const InfoSection1Style = styled.section`
   @media only screen and (max-width: 480px) {
     .container {
       .moviePoster {
-        width: 60%;
+        width: 50%;
       }
       .movieOtherInfo {
+        width: 48%;
         .titleInfo {
           .title {
             font-size: 1.1em;
@@ -99,11 +99,12 @@ const InfoSection1Style = styled.section`
           }
         }
         .infoBox {
+          width: 100%;
           .movieInfo {
-            width: 40%;
+            width: 46%;
           }
           .loadInfo {
-            width: 60%;
+            width: 54%;
           }
         }
       }

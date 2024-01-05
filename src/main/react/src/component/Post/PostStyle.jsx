@@ -191,7 +191,6 @@ export const PostComp = styled.section`
               text-align: right;
             }
             .editBtnBox {
-              outline: 1px solid red;
               display: flex;
               justify-content: space-between;
             }
