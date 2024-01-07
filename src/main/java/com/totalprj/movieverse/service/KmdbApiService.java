@@ -25,7 +25,8 @@ public class KmdbApiService {
 
 
     // 스케줄러 등록
-    @Scheduled(initialDelay = 80 * 1000, fixedDelay = Long.MAX_VALUE)
+//    @Scheduled(initialDelay = 80 * 1000, fixedDelay = Long.MAX_VALUE)
+    @Scheduled(cron = "0 0 4 15 * ?")
     public void movieScheduler() {
         Instant startTime = Instant.now();
         log.info("KmdbApiService schedule start!");

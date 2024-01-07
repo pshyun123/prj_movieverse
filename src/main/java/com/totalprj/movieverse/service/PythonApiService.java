@@ -35,8 +35,8 @@ public class PythonApiService {
     private final BoxofficeRepository boxofficeRepository;
 
 
-//    @Scheduled(cron = "0 1 * * * *")
-    @Scheduled(initialDelay = 0, fixedDelay = Long.MAX_VALUE)
+//    @Scheduled(initialDelay = 0, fixedDelay = Long.MAX_VALUE)
+    @Scheduled(cron = "0 0 3 * * ?")
     public void startScheduler(){
         Instant startTime = Instant.now();
         log.info("PythonApiService schedule start!");
