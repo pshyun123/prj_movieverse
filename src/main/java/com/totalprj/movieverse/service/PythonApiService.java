@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 
@@ -155,17 +156,21 @@ public class PythonApiService {
         switch(type) {
             case "box_office" :
                 // box_office
-                deleteAndSaveEntity(boxofficeRepository, Boxoffice.class ,ottData);
+                Supplier<Boxoffice> boxofficeSupplier = Boxoffice::new;
+                deleteAndSaveEntity(boxofficeRepository, boxofficeSupplier ,ottData);
                 break;
             case "netflix" :
+                Supplier<OttNetflix> ottNetflixSupplier = OttNetflix::new;
                 // netflix
-                deleteAndSaveEntity(netflixRepository, OttNetflix.class, ottData);
+                deleteAndSaveEntity(netflixRepository, ottNetflixSupplier, ottData);
                 break;
             case "watcha" :
-                deleteAndSaveEntity(watchaRepository, OttWatcha.class, ottData);
+                Supplier<OttWatcha> ottWatchaSupplier = OttWatcha::new;
+                deleteAndSaveEntity(watchaRepository, ottWatchaSupplier, ottData);
                 break;
             case "tving":
-                deleteAndSaveEntity(tvingRepository,OttTving.class, ottData);
+                Supplier<OttTving> ottTvingSupplier = OttTving::new;
+                deleteAndSaveEntity(tvingRepository,ottTvingSupplier, ottData);
                 break;
             default:
                 log.warn("ottData가 없습니다");
@@ -173,18 +178,13 @@ public class PythonApiService {
     }
 
     // 해당 테이블 정보 지우고 새 정보 저장
-    private <T> void deleteAndSaveEntity(JpaRepository<T, ?>repository, Class<T> entityType, List<Map<String, String>> ottData){
+    private <T> void deleteAndSaveEntity(JpaRepository<T, ?>repository, Supplier<T> entitySupplier, List<Map<String, String>> ottData){
         log.info("deleteAndSaveEntity 진입");
         // 테이블 비우기
         repository.deleteAll();
         for(Map<String, String> data : ottData) {
-            T entity;
             // 새 entity 객체 생성
-            try {
-                entity = entityType.getDeclaredConstructor().newInstance();
-            } catch (Exception e) {
-                throw new RuntimeException("엔티티 객체 생성 실패.", e);
-            }
+            T entity = entitySupplier.get();
 
             try {
                 // 제목, 감독 정보를 기준으로 영화 검색

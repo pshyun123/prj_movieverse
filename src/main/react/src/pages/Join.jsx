@@ -51,7 +51,7 @@ const Join = ({ email, profile, kakaoId }) => {
   };
   const [modalMsg, setModalMsg] = useState("");
   const [modalHeader, setModalHeader] = useState("");
-  const [modalType, setModalType] = useState(null);
+  const [modalConfirm, setModalConfirm] = useState("");
   /////////////////////////////////////////////////////////////
 
   //키보드 입력
@@ -318,7 +318,7 @@ const Join = ({ email, profile, kakaoId }) => {
         setModalOpen(true);
         setModalHeader("회원가입");
         setModalMsg("회원가입에 성공했습니다!");
-        setModalType("회원가입");
+        setModalConfirm("회원가입");
       }
     } catch (err) {
       console.log("회원가입 : " + err);
@@ -344,8 +344,8 @@ const Join = ({ email, profile, kakaoId }) => {
       const res = await MemberApi.login(email, kakaoId);
       console.log(res.data);
       if (res.data.grantType === "Bearer") {
-        console.log("KL accessToken : " + res.data.accessToken);
-        console.log("KL refreshToken : " + res.data.refreshToken);
+        // console.log("KL accessToken : " + res.data.accessToken);
+        // console.log("KL refreshToken : " + res.data.refreshToken);
         Common.setAccessToken(res.data.accessToken);
         Common.setRefreshToken(res.data.refreshToken);
         setLoginStatus(true);
@@ -493,11 +493,11 @@ const Join = ({ email, profile, kakaoId }) => {
         close={closeModal}
         header={modalHeader}
         children={modalMsg}
-        type={modalType}
-        confirm={() => {
+        type={false}
+        closeEvt={() => {
           if (email) {
             kakaoLogin();
-          } else {
+          } else if (modalConfirm === "회원가입") {
             navigate("/login");
           }
         }}
