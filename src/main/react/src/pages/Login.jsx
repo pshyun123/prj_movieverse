@@ -133,8 +133,8 @@ const Login = () => {
       }
     } catch (err) {
       console.log("로그인 에러 : " + err);
-      if (err.response && err.response.status === 401) {
-        console.log("로그인 실패: 401 Unauthorized");
+      if (err.response && err.response.status === 405) {
+        console.log("로그인 실패: 405 Unauthorized");
         setModalOpen(true);
         setModalMsg("잘못된 아이디 또는 비밀번호 입니다.");
       } else {
