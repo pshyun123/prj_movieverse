@@ -106,7 +106,7 @@ const OttSlide = ({ activeButton }) => {
       const result = await data;
 
       if (result && result.data !== null) {
-        console.log(result.data);
+        // console.log(result.data);
         setMovieData(result.data);
 
         swiperRef.current.swiper.slideTo(0);

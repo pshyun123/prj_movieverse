@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import React, { useState, useEffect, useRef } from "react";
 import Button from "../../../util/Button";
 import basicProfile from "../../../images/faceIcon/faceIcon1.png";
+import Common from "../../../util/Common";
 
 const TrComp = styled.tr`
   vertical-align: middle;
@@ -128,7 +129,11 @@ const Tr = ({ data, index, revise, setRevise, clickOk, clickDel, editId }) => {
         <span className="wrapper">
           <span className="imgBox">
             <img
-              src={data.memberImage ? data.memberImage : basicProfile}
+              src={
+                data.memberImage
+                  ? Common.convertToHttps(data.memberImage)
+                  : basicProfile
+              }
               alt="profile"
             />
           </span>

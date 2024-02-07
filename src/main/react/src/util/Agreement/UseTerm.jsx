@@ -7,10 +7,10 @@ const UseTerm = () => {
         <p className="term_title">제1조 (목적)</p>
         <ul className="ul_square">
           <li>
-            이 약관은, (주)MovieVerse(이하 "회사”)가 제공하는
-            서비스('http://movieverse2024.site'이하 “서비스”)를 이용하고자 하는 이용자(이하
-            "회원")간의 권리와 의무 및 기타 제반사항을 명확히 하는 것을 목적으로
-            합니다.
+            이 약관은, MovieVerse(이하 "회사”)가 제공하는
+            서비스('https://movieverse2024.site'이하 “서비스”)를 이용하고자 하는
+            이용자(이하 "회원")간의 권리와 의무 및 기타 제반사항을 명확히 하는
+            것을 목적으로 합니다.
           </li>
         </ul>
       </div>

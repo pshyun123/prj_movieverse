@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Common from "../../util/Common";
 
 const StillCompStyle = styled.div`
   .still {
@@ -23,7 +24,7 @@ const StillCutComp = ({ still }) => {
     <>
       <StillCompStyle>
         <div className="still">
-          <img src={still} alt="stllsImg" />
+          <img src={Common.convertToHttps(still)} alt="stllsImg" />
         </div>
       </StillCompStyle>
     </>

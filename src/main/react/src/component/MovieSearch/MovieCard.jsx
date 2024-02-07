@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Bookmark from "./Bookmark";
 import { useNavigate } from "react-router-dom";
+import Common from "../../util/Common";
 
 const MovieCardComp = styled.div`
   position: relative;
@@ -156,7 +157,7 @@ const MovieCard = ({
   return (
     <>
       <MovieCardComp className={hide ? "hide" : ""}>
-        <ImgComp $imgsrc={movie.posters} />
+        <ImgComp $imgsrc={Common.convertToHttps(movie.posters)} />
         <div className="overlay" onClick={toMovieDetail}>
           <div className="hoverInfo">
             <p className="title">{movie.title}</p>

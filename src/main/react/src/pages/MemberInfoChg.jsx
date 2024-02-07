@@ -220,7 +220,9 @@ const MemberInfoChg = () => {
       setInputAlias(res.data.alias);
       setInputPhone(res.data.phone);
       setInputAddr(res.data.addr);
-      res.data.image ? setImgSrc(res.data.image) : setImgSrc(basicProfile);
+      res.data.image
+        ? setImgSrc(Common.convertToHttps(res.data.image))
+        : setImgSrc(basicProfile);
     }
   };
 

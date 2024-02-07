@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import basicProfile from "../../images/faceIcon/faceIcon1.png";
+import Common from "../../util/Common";
 
 const SenderComp = styled.div`
   display: flex;
@@ -91,7 +92,7 @@ export const Message = ({ isSender, msg, profile, alias }) => {
       ) : (
         <Sender
           msg={msg}
-          profile={profile ? profile : basicProfile}
+          profile={profile ? Common.convertToHttps(profile) : basicProfile}
           alias={alias}
         />
       )}

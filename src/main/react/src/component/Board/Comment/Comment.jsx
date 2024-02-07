@@ -5,6 +5,7 @@ import EditModal from "./EditCommentModal";
 import { useState } from "react";
 import CommnetApi from "../../../api/CommentApi";
 import useTokenAxios from "../../../hooks/useTokenAxios";
+import Common from "../../../util/Common";
 
 const Comment = ({ comment, fetchCommentList, userAlias }) => {
   const dateTimeString = comment.commentRegDate;
@@ -79,7 +80,10 @@ const Comment = ({ comment, fetchCommentList, userAlias }) => {
       <div key={comment.commentId} className="commentBox">
         <div className="iconArea">
           <div className="imgBox">
-            <img src={comment.memberImage || faceIcon} alt="memberIcon" />
+            <img
+              src={Common.convertToHttps(comment.memberImage) || faceIcon}
+              alt="memberIcon"
+            />
           </div>
         </div>
         <div className="textArea">

@@ -51,11 +51,13 @@ const Header = () => {
     <>
       <HeaderComp>
         <div className="container">
-          <FontAwesomeIcon
-            icon={icon}
-            className="m-menu"
-            onClick={mMenuClick}
-          />
+          <div className="mo-menu">
+            <FontAwesomeIcon
+              icon={icon}
+              className="m-menu"
+              onClick={mMenuClick}
+            />
+          </div>
           <div className="logo">
             <img
               src={Logo}

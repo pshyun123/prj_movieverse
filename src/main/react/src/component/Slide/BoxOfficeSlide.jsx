@@ -83,7 +83,7 @@ const BoxOfficeSlide = () => {
     try {
       const res = await OttBoxApi.getBoxOfficeMovies();
       if (res.data !== null) {
-        console.log(res.data);
+        // console.log(res.data);
         setMovieData(res.data);
       } else {
         console.log("영화 정보가 없습니다.");

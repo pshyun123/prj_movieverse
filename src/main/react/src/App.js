@@ -26,6 +26,7 @@ import AdminFaq from "./pages/Admin/AdminFaq";
 import AdminBoard from "./pages/Admin/AdminBoard";
 import AdminLayout from "./pages/Admin/AdminLayout";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
               <Route path="/kikilist/:roomId" element={<Chat />} />
               <Route path="/payment" element={<Payment />} />
               <Route path="/payment/result" element={<PaymentRst />} />
+              <Route path="/privacyterm" element={<Privacy />} />
             </Route>
             <Route path="/logina" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>

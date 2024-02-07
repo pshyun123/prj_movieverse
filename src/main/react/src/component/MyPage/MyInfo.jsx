@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import profileimg from "../../images/faceIcon/faceIcon1.png";
 import Button from "../../util/Button";
+import Common from "../../util/Common";
 
 const MyInfoComp = styled.section`
   width: 100%; /* 보통 높이값은 따로 주지 않음!(배너를 잡을 경우에는 높이값을 줌) */
@@ -154,7 +155,7 @@ const MyInfo = ({ memberInfo }) => {
                   <img
                     src={
                       memberInfo && memberInfo.image
-                        ? memberInfo.image
+                        ? Common.convertToHttps(memberInfo.image)
                         : profileimg
                     }
                     alt="profile"

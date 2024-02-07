@@ -34,6 +34,9 @@ const Common = {
       },
     };
   },
+  convertToHttps: (url) => {
+    return url.replace(/^http:/, "https:");
+  },
 
   // 토큰 재발행(만료시)
   handleUnathorized: async () => {

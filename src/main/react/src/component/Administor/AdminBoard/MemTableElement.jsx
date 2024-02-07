@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Button from "../../../util/Button";
 import basicProfile from "../../../images/faceIcon/faceIcon1.png";
+import Common from "../../../util/Common";
 
 const MemTrComp = styled.tr`
   vertical-align: middle;
@@ -49,7 +50,11 @@ const MemTr = ({ data, index, setId, deleteModal }) => {
         <span className="wrapper">
           <span className="imgBox">
             <img
-              src={data.image ? `${data.image}` : `${basicProfile}`}
+              src={
+                data.image
+                  ? `${Common.convertToHttps(data.image)}`
+                  : `${basicProfile}`
+              }
               alt="profile"
             />
           </span>

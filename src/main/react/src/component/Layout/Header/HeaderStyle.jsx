@@ -118,10 +118,14 @@ const HeaderComp = styled.header`
     @media only screen and (max-width: 768px) {
       justify-content: space-between;
       height: 80px;
-      .m-menu {
-        display: block;
+      .mo-menu {
         flex-grow: 0;
-        font-size: 40px;
+
+        .m-menu {
+          display: block;
+          font-size: 40px;
+          padding: 10px;
+        }
       }
 
       nav {
@@ -176,6 +180,31 @@ const HeaderComp = styled.header`
       }
       .log-icon {
         flex-grow: 0;
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    height: 40px;
+    .container {
+      height: 40px;
+      .mo-menu {
+        .m-menu {
+          font-size: 20px;
+        }
+        flex-grow: 1;
+        width: 20%;
+      }
+      .logo {
+        flex-grow: 1;
+      }
+      nav {
+        height: calc(100vh - 40px);
+        top: 39px;
+      }
+      .log-icon {
+        flex-grow: 1;
+        width: 20%;
+        font-size: 20px;
       }
     }
   }

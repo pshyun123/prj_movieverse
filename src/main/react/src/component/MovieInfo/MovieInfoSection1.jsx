@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useEffect } from "react";
 import Bookmark from "../MovieSearch/Bookmark";
 import Modal from "../../util/Modal";
 import { useNavigate } from "react-router-dom";
@@ -112,7 +112,7 @@ const InfoSection1Style = styled.section`
   }
 `;
 
-const MovieInfoSection1 = ({ movieDetail, movieId }) => {
+const MovieInfoSection1 = ({ movieDetail, movieId, poster }) => {
   const navigate = useNavigate();
   //Modal
   // 여기서부터
@@ -159,7 +159,7 @@ const MovieInfoSection1 = ({ movieDetail, movieId }) => {
         <section>
           <div className="container">
             <div className="moviePoster">
-              <img src={movieDetail.posters} alt="PosterImg" />
+              <img src={poster} alt="PosterImg" />
               <Bookmark
                 className="BookmarkIcon"
                 movieId={movieId}

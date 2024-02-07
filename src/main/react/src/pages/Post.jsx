@@ -8,6 +8,7 @@ import MemberApi from "../api/MemberApi";
 import Modal from "../util/Modal";
 import profileimg from "../images/faceIcon/faceIcon1.png";
 import useTokenAxios from "../hooks/useTokenAxios";
+import Common from "../util/Common";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ const Post = () => {
                 <img
                   src={
                     boardData && boardData.memberImage
-                      ? boardData.memberImage
+                      ? Common.convertToHttps(boardData.memberImage)
                       : profileimg
                   }
                   alt="memberIcon"
