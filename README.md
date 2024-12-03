@@ -118,13 +118,15 @@ o	20명의 비공개 테스터 모집 및 14일 연속 테스트 유지 조건 �
  
 ### 1. WBS (작업 분류 체계) 
 <img width="1340" alt="wbs1" src="https://github.com/user-attachments/assets/c24e8275-67ed-4d13-8d4e-9755c0e6c6ae">
-
 <img width="1469" alt="wbs2" src="https://github.com/user-attachments/assets/23d88587-c4a1-41a8-a6b5-bb8d03cfba8c">
 ### 2. 메뉴트리 / ERD 
-![Menu tree](https://github.com/user-attachments/assets/f670a6e2-573f-4ea4-bfb1-90499f97eefc)
-![ERD-movieverse](https://github.com/user-attachments/assets/020afa59-fca9-4a91-9a8b-aec316682ef8)
+![Menu tree](https://github.com/user-attachments/assets/ff4c87bd-f0ce-4e8a-921c-908be46de202)
+
+![ERD-movieverse](https://github.com/user-attachments/assets/37662015-a0af-4c54-a805-f993dffc09fa)
 ### 3. 스토리보드 (Figma) 
-![스토리보드](https://github.com/user-attachments/assets/978c48a9-490d-454a-808b-35fa9cf3ab6a)
+![스토리보드](https://github.com/user-attachments/assets/cfa54e3d-80ee-4c6b-89f2-b87b970a2832)
+
+
 ### 4. 단위 테스트 결과 
 <img width="1414" alt="단위테스트" src="https://github.com/user-attachments/assets/78b5b6d6-7938-4fe3-a817-4789f2227de0">
 ### 5. 애자일 - 스플린트 회의
@@ -144,6 +146,4 @@ o	20명의 비공개 테스터 모집 및 14일 연속 테스트 유지 조건 �
 | 형상 관리 | Git, GitHub | 
 
 ---
- 
 
-![image](https://github.com/user-attachments/assets/5b678d3a-7ab4-4d27-9273-0c9fb65e4753)
