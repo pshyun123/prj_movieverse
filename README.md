@@ -129,6 +129,7 @@ o	20명의 비공개 테스터 모집 및 14일 연속 테스트 유지 조건 �
 
 ### 4. 단위 테스트 결과 
 <img width="1414" alt="단위테스트" src="https://github.com/user-attachments/assets/78b5b6d6-7938-4fe3-a817-4789f2227de0">
+
 ### 5. 애자일 - 스플린트 회의
 <img width="677" alt="스플린트" src="https://github.com/user-attachments/assets/f0f0858d-2b13-408a-8428-f7d46e272a74">
  
