@@ -1,5 +1,5 @@
 # **Movieverse** 
-🔗 ** Movieverse 사이트**
+🔗 **Movieverse 사이트**
 https://movieverse2024.site/ </br>
 
 🔗 **발표 PPT**
